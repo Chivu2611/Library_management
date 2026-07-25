@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        url('/images/library-bg.jpe');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 20px;
+}
+
+.system-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.system-title h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.system-title p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    padding: 35px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    height: 45px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    font-size: 15px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #17a2b8;
+}
+
+.login-button {
+    width: 100%;
+    height: 45px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #17a2b8;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.login-button:hover {
+    opacity: 0.9;
+}
+
+.alert {
+    padding: 12px;
+    margin-bottom: 20px;
+
+    border-radius: 6px;
+
+    text-align: center;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.footer-text {
+    color: white;
+    margin-top: 30px;
+    font-size: 14px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+
+    .system-title h1 {
+        font-size: 27px;
+    }
+
+    .login-card {
+        padding: 25px;
+    }
+}

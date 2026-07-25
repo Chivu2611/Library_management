@@ -1,0 +1,53 @@
+/* Style nền chung */
+.page-background {
+    min-height: 100vh;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* Trang sách */
+.books-bg {
+    background-image:
+        linear-gradient(
+            rgba(230, 245, 247, 0.65),
+            rgba(245, 249, 250, 0.65)
+        ),
+        url('/images/books-bg.jpe');
+}
+
+
+/* Trang tác giả */
+.authors-bg {
+    background-image:
+        linear-gradient(
+            rgba(230, 245, 247, 0.65),
+            rgba(245, 249, 250, 0.65)
+        ),
+        url('/images/authors-bg.jpe');
+}
+
+
+/* Trang thể loại */
+.categories-bg {
+    background-image:
+        linear-gradient(
+            rgba(230, 245, 247, 0.65),
+            rgba(245, 249, 250, 0.65)
+        ),
+        url('/images/categories-bg.jpe');
+}
+
+
+/* Trang nhà xuất bản */
+.publishers-bg {
+    background-image:
+        linear-gradient(
+            rgba(230, 245, 247, 0.65),
+            rgba(245, 249, 250, 0.65)
+        ),
+        url('/images/publishers-bg.jpe');
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet" th:href="@{/css/header.css}">
+	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Danh sách thể loại</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+</head>
+
+<body>
+
+	<div th:insert="comman/header :: header"></div>
+
+	<div class="container my-2">
+
+		<div th:switch="${categories}" class="container my-5">
+
+			<p class="my-5">
+				<a href="/addCategory" class="btn btn-dark">
+					<i class="fas fa-user-plus ml-2"> Thêm thể loại </i>
+				</a>
+
+				&nbsp;&nbsp;
+
+				<a href="/export/all-category" class="btn btn-info">
+					<i class="fas fa-file-csv ml-2"> Xuất CSV </i>
+				</a>
+			</p>
+
+			<div class="col-md-12">
+
+				<h2 th:case="null">Không có dữ liệu thể loại!</h2>
+
+				<div th:case="*">
+
+					<table class="table table-bordered">
+
+						<thead>
+							<tr>
+								<th>Tên thể loại</th>
+								<th>Sửa</th>
+								<th>Xóa</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<tr th:each="category : ${categories}">
+
+								<td th:text="${category.name}"></td>
+
+								<td>
+									<a th:href="@{/updateCategory/{id}(id=${category.id})}"
+										class="btn btn-warning">
+										<i class="fas fa-user-edit ml-2"></i>
+									</a>
+								</td>
+
+								<td>
+									<a th:href="@{/remove-category/{id}(id=${category.id})}"
+										class="btn btn-danger">
+										<i class="fas fa-user-times ml-2"></i>
+									</a>
+								</td>
+
+							</tr>
+
+						</tbody>
+
+					</table>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div th:insert="comman/footer :: footer"></div>
+
+</body>
+
+</html>
