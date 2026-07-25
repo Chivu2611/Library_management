@@ -1,4 +1,7 @@
-/* Style nền chung */
+/* =========================
+   NỀN CHUNG
+   ========================= */
+
 .page-background {
     min-height: 100vh;
 
@@ -9,44 +12,91 @@
 }
 
 
-/* Trang sách */
+/* =========================
+   PHÂN HỆ SÁCH
+   ========================= */
+
 .books-bg {
     background-image:
         linear-gradient(
-            rgba(230, 245, 247, 0.65),
+            rgba(225, 242, 245, 0.65),
             rgba(245, 249, 250, 0.65)
         ),
-        url('/images/books-bg.jpe');
+        url('/images/book-bg.jpe');
 }
 
 
-/* Trang tác giả */
+/* Card chi tiết sách */
+
+.book-detail-card {
+    background: rgba(255, 255, 255, 0.94);
+
+    border: none;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+/* =========================
+   BẢNG DỮ LIỆU
+   ========================= */
+
+.table {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Phần tiêu đề bảng */
+.table thead th {
+    background-color: #ffffff;
+    color: #222;
+    font-weight: 700;
+}
+
+/* Các ô dữ liệu */
+.table tbody td {
+    background-color: rgba(255, 255, 255, 0.92);
+    vertical-align: middle;
+}
+
+/* Khi rê chuột vào một dòng */
+.table tbody tr:hover td {
+    background-color: #f3f8f9;
+}
+/* =========================
+   PHÂN HỆ TÁC GIẢ
+   ========================= */
+
 .authors-bg {
     background-image:
         linear-gradient(
-            rgba(230, 245, 247, 0.65),
+            rgba(225, 242, 245, 0.65),
             rgba(245, 249, 250, 0.65)
         ),
         url('/images/authors-bg.jpe');
 }
 
 
-/* Trang thể loại */
+/* =========================
+   PHÂN HỆ THỂ LOẠI
+   ========================= */
+
 .categories-bg {
     background-image:
         linear-gradient(
-            rgba(230, 245, 247, 0.65),
+            rgba(225, 242, 245, 0.65),
             rgba(245, 249, 250, 0.65)
         ),
         url('/images/categories-bg.jpe');
 }
 
 
-/* Trang nhà xuất bản */
+/* =========================
+   PHÂN HỆ NHÀ XUẤT BẢN
+   ========================= */
+
 .publishers-bg {
     background-image:
         linear-gradient(
-            rgba(230, 245, 247, 0.65),
+            rgba(225, 242, 245, 0.65),
             rgba(245, 249, 250, 0.65)
         ),
         url('/images/publishers-bg.jpe');

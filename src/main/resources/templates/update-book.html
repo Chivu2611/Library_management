@@ -1,62 +1,115 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
-	rel="stylesheet">
+	<title>Cập nhật sách</title>
 
-<link rel="stylesheet" th:href="@{/css/header.css}">
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Cập nhật sách</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+		rel="stylesheet">
+
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+
+	<script>
+		function previewCover(event) {
+
+			var preview = document.getElementById("newCoverPreview");
+			var label = document.getElementById("newCoverLabel");
+
+			if (event.target.files && event.target.files[0]) {
+
+				preview.src = URL.createObjectURL(event.target.files[0]);
+				preview.style.display = "block";
+
+				label.style.display = "block";
+			}
+		}
+	</script>
+
 </head>
 
 <body>
+
 	<div th:insert="comman/header :: header"></div>
 
+
 	<div class="container my-5">
+
 		<h3>Cập nhật sách</h3>
 
 		<div class="card">
+
 			<div class="card-body">
+
 				<div class="col-md-10">
 
-					<form action="#" th:action="@{/update-book/{id}(id=${book.id})}"
-						th:object="${book}" method="post">
+					<form action="#"
+						th:action="@{/update-book/{id}(id=${book.id})}"
+						th:object="${book}"
+						method="post"
+						enctype="multipart/form-data">
 
 						<div class="row">
 
+
+							<!-- ===================== -->
+							<!-- ISBN -->
+							<!-- ===================== -->
+
 							<div class="form-group col-md-8">
-								<label for="isbn" class="col-form-label">ISBN</label>
+
+								<label for="isbn" class="col-form-label">
+									ISBN
+								</label>
 
 								<input type="text"
 									th:field="*{isbn}"
 									class="form-control"
 									id="isbn"
-									placeholder="Nhập mã ISBN" />
+									placeholder="Nhập mã ISBN">
 
 								<span th:if="${#fields.hasErrors('isbn')}"
-									th:errors="*{isbn}"></span>
+									th:errors="*{isbn}">
+								</span>
+
 							</div>
 
+
+							<!-- ===================== -->
+							<!-- TÊN SÁCH -->
+							<!-- ===================== -->
+
 							<div class="form-group col-md-8">
-								<label for="name" class="col-form-label">Tên sách</label>
+
+								<label for="name" class="col-form-label">
+									Tên sách
+								</label>
 
 								<input type="text"
 									th:field="*{name}"
 									class="form-control"
 									id="name"
-									placeholder="Nhập tên sách" />
+									placeholder="Nhập tên sách">
+
 							</div>
 
+
+							<!-- ===================== -->
+							<!-- TÊN BỘ SÁCH -->
+							<!-- ===================== -->
+
 							<div class="form-group col-md-8">
+
 								<label for="serialName" class="col-form-label">
 									Tên bộ sách
 								</label>
@@ -65,35 +118,237 @@
 									th:field="*{serialName}"
 									class="form-control"
 									id="serialName"
-									placeholder="Nhập tên bộ sách" />
+									placeholder="Nhập tên bộ sách">
+
 							</div>
 
+
+							<!-- ===================== -->
+							<!-- MÔ TẢ -->
+							<!-- ===================== -->
+
 							<div class="form-group col-md-8">
-								<label for="description" class="col-form-label">Mô tả</label>
+
+								<label for="description" class="col-form-label">
+									Mô tả
+								</label>
 
 								<input type="text"
 									th:field="*{description}"
 									class="form-control"
 									id="description"
-									placeholder="Nhập mô tả sách" />
+									placeholder="Nhập mô tả sách">
+
 							</div>
 
-							<div class="col-md-6">
+
+							<!-- ===================== -->
+							<!-- ẢNH BÌA HIỆN TẠI -->
+							<!-- ===================== -->
+
+							<div class="form-group col-md-8">
+
+								<label class="col-form-label d-block">
+									Ảnh bìa hiện tại
+								</label>
+
+
+								<!-- Có ảnh -->
+
+								<div th:if="${book.coverImage != null and !book.coverImage.isEmpty()}">
+
+									<img th:src="@{'/uploads/books/' + ${book.coverImage}}"
+										alt="Ảnh bìa sách"
+										style="
+											width: 150px;
+											height: 210px;
+											object-fit: cover;
+											border-radius: 6px;
+											border: 1px solid #ddd;
+											box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+										">
+
+								</div>
+
+
+								<!-- Chưa có ảnh -->
+
+								<div th:if="${book.coverImage == null or book.coverImage.isEmpty()}"
+									class="text-muted">
+
+									<i class="fas fa-image"></i>
+									Chưa có ảnh bìa
+
+								</div>
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- THAY ẢNH BÌA -->
+							<!-- ===================== -->
+
+							<div class="form-group col-md-8">
+
+								<label for="coverFile" class="col-form-label">
+									Thay đổi ảnh bìa
+								</label>
+
+								<input type="file"
+									name="coverFile"
+									id="coverFile"
+									class="form-control-file"
+									accept="image/*"
+									onchange="previewCover(event)">
+
+								<small class="form-text text-muted">
+									Nếu không chọn ảnh mới, hệ thống sẽ giữ nguyên ảnh hiện tại.
+								</small>
+
+
+								<!-- Preview ảnh mới -->
+
+								<p id="newCoverLabel"
+									style="
+										display: none;
+										margin-top: 15px;
+										margin-bottom: 7px;
+										font-weight: 600;
+									">
+									Ảnh mới:
+								</p>
+
+								<img id="newCoverPreview"
+									alt="Xem trước ảnh bìa mới"
+									style="
+										display: none;
+										width: 150px;
+										height: 210px;
+										object-fit: cover;
+										border-radius: 6px;
+										border: 1px solid #ddd;
+										box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+									">
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- THỂ LOẠI -->
+							<!-- ===================== -->
+
+							<div class="form-group col-md-8">
+
+								<label class="col-form-label">
+									Thể loại
+								</label>
+
+								<select th:field="*{categories}"
+									class="form-control">
+
+									<option th:each="category : ${categories}"
+										th:value="${category.id}"
+										th:text="${category.name}">
+									</option>
+
+								</select>
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- TÁC GIẢ -->
+							<!-- ===================== -->
+
+							<div class="form-group col-md-8">
+
+								<label class="col-form-label">
+									Tác giả
+								</label>
+
+								<select th:field="*{authors}"
+									class="form-control">
+
+									<option th:each="author : ${authors}"
+										th:value="${author.id}"
+										th:text="${author.name}">
+									</option>
+
+								</select>
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- NHÀ XUẤT BẢN -->
+							<!-- ===================== -->
+
+							<div class="form-group col-md-8">
+
+								<label class="col-form-label">
+									Nhà xuất bản
+								</label>
+
+								<select th:field="*{publishers}"
+									class="form-control">
+
+									<option th:each="publisher : ${publishers}"
+										th:value="${publisher.id}"
+										th:text="${publisher.name}">
+									</option>
+
+								</select>
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- LỖI UPLOAD -->
+							<!-- ===================== -->
+
+							<div class="col-md-8"
+								th:if="${uploadError != null}">
+
+								<div class="alert alert-danger"
+									th:text="${uploadError}">
+								</div>
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- SUBMIT -->
+							<!-- ===================== -->
+
+							<div class="col-md-8 mt-3">
+
 								<input type="submit"
 									class="btn btn-success"
 									value="Cập nhật">
+
+								<a th:href="@{/books}"
+									class="btn btn-secondary ml-2">
+									Quay lại
+								</a>
+
 							</div>
+
 
 						</div>
 
 					</form>
 
 				</div>
+
 			</div>
+
 		</div>
+
 	</div>
 
+
 	<div th:insert="comman/footer :: footer"></div>
+
 </body>
 
 </html>

@@ -16,6 +16,7 @@ import com.knf.dev.librarymanagementsystem.entity.Publisher;
 import com.knf.dev.librarymanagementsystem.entity.Role;
 import com.knf.dev.librarymanagementsystem.entity.User;
 import com.knf.dev.librarymanagementsystem.repository.UserRepository;
+import com.knf.dev.librarymanagementsystem.repository.BookRepository;
 import com.knf.dev.librarymanagementsystem.service.BookService;
 
 @SpringBootApplication
@@ -30,6 +31,9 @@ public class Application {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BookRepository bookRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
 
@@ -42,9 +46,17 @@ public class Application {
         System.out.println();
     }
 
-    @Bean
-    public CommandLineRunner initialCreate() {
-        return (args) -> {
+
+@Bean
+public CommandLineRunner initialCreate() {
+
+    return (args) -> {
+
+        // ==========================================
+        // TẠO DỮ LIỆU SÁCH MẪU NẾU CHƯA CÓ
+        // ==========================================
+
+        if (bookRepository.count() == 0) {
 
             var book = new Book(
                     "9786041234567",
@@ -52,16 +64,20 @@ public class Application {
                     "DMPLK001",
                     "Tác phẩm văn học thiếu nhi nổi tiếng"
             );
+
             book.addAuthors(new Author(
                     "Tô Hoài",
                     "Nhà văn Việt Nam"
             ));
+
             book.addCategories(new Category(
                     "Văn học thiếu nhi"
             ));
+
             book.addPublishers(new Publisher(
                     "Nhà xuất bản Kim Đồng"
             ));
+
             bookService.createBook(book);
 
 
@@ -71,16 +87,20 @@ public class Application {
                     "CTV001",
                     "Tác phẩm viết về thế giới tuổi thơ"
             );
+
             book1.addAuthors(new Author(
                     "Nguyễn Nhật Ánh",
                     "Nhà văn Việt Nam"
             ));
+
             book1.addCategories(new Category(
                     "Văn học"
             ));
+
             book1.addPublishers(new Publisher(
                     "Nhà xuất bản Trẻ"
             ));
+
             bookService.createBook(book1);
 
 
@@ -90,28 +110,56 @@ public class Application {
                     "LH001",
                     "Tác phẩm văn học hiện thực Việt Nam"
             );
+
             book2.addAuthors(new Author(
                     "Nam Cao",
                     "Nhà văn Việt Nam"
             ));
+
             book2.addCategories(new Category(
                     "Văn học Việt Nam"
             ));
+
             book2.addPublishers(new Publisher(
                     "Nhà xuất bản Văn học"
             ));
+
             bookService.createBook(book2);
 
+            System.out.println("Đã tạo dữ liệu sách mẫu.");
 
-            var user = new User(
+        } else {
+
+            System.out.println("Đã có dữ liệu sách. Không tạo lại.");
+
+        }
+
+
+        // ==========================================
+        // TẠO ADMIN NẾU CHƯA CÓ
+        // ==========================================
+
+        if (userRepository.findByEmail("admin@.in") == null) {
+
+            var admin = new User(
                     "admin",
                     "admin",
                     "admin@.in",
                     passwordEncoder.encode("123456"),
-                    Arrays.asList(new Role("ROLE_ADMIN"))
+                    Arrays.asList(
+                            new Role("ROLE_ADMIN")
+                    )
             );
 
-            userRepository.save(user);
-        };
-    }
+            userRepository.save(admin);
+
+            System.out.println("Đã tạo tài khoản Admin.");
+
+        } else {
+
+            System.out.println("Tài khoản Admin đã tồn tại.");
+
+        }
+    };
+}
 }

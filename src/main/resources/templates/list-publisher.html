@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title th:text="${publisher.name} + ' - Thư viện'">
+        Chi tiết nhà xuất bản
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+    <!-- Font Charm -->
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/publisher-detail.css}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div th:insert="comman/header :: header"></div>
+
+
+<main class="publisher-detail-page">
+
+    <div class="publisher-container">
+
+        <!-- TIÊU ĐỀ -->
+        <section class="publisher-heading">
+
+            <span class="publisher-label">
+                NHÀ XUẤT BẢN
+            </span>
+
+            <h1 th:text="${publisher.name}">
+                Tên nhà xuất bản
+            </h1>
+
+            <p>
+                Khám phá những cuốn sách đến từ nhà xuất bản này.
+            </p>
+
+        </section>
+
+
+        <!-- SÁCH -->
+        <section class="publisher-books">
+
+            <div class="publisher-section-title">
+
+                <h2>
+                    <i class="fas fa-book-open"></i>
+                    Sách của nhà xuất bản
+                </h2>
+
+            </div>
+
+
+            <div class="publisher-book-grid">
+
+                <a th:each="book : ${publisher.books}"
+                   th:href="@{/book/{id}(id=${book.id})}"
+                   class="publisher-book-card">
+
+                    <!-- ẢNH BÌA -->
+                    <div class="publisher-book-cover">
+
+                        <img th:if="${book.coverImage != null}"
+                             th:src="@{'/uploads/books/' + ${book.coverImage}}"
+                             th:alt="${book.name}">
+
+                        <div th:unless="${book.coverImage != null}"
+                             class="publisher-no-cover">
+
+                            <i class="fas fa-book"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- THÔNG TIN -->
+                    <div class="publisher-book-info">
+
+                        <h3 th:text="${book.name}">
+                            Tên sách
+                        </h3>
+
+                        <p th:text="${book.serialName}">
+                            Tên bộ sách
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- NẾU CHƯA CÓ SÁCH -->
+            <div th:if="${publisher.books == null or publisher.books.isEmpty()}"
+                 class="empty-publisher">
+
+                <i class="fas fa-book-open"></i>
+
+                <p>
+                    Hiện chưa có sách nào thuộc nhà xuất bản này.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUAY LẠI -->
+        <div class="back-area">
+
+            <a th:href="@{/publishers}">
+                <i class="fas fa-arrow-left"></i>
+                Xem tất cả nhà xuất bản
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+<div th:insert="comman/footer :: footer"></div>
+
+</body>
+</html>

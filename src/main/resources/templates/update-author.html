@@ -1,75 +1,292 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
-	rel="stylesheet">
+	<title>Cập nhật tác giả</title>
 
-<link rel="stylesheet" th:href="@{/css/header.css}">
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Cập nhật tác giả</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+	<!-- Font Charm -->
+	<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+		rel="stylesheet">
+
+	<!-- Header CSS -->
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+
+
+	<script>
+
+		// Xem trước ảnh tác giả mới
+		function previewAuthorImage(event) {
+
+			var preview =
+				document.getElementById("newAuthorPreview");
+
+			var label =
+				document.getElementById("newImageLabel");
+
+			if (event.target.files &&
+				event.target.files[0]) {
+
+				preview.src =
+					URL.createObjectURL(
+						event.target.files[0]
+					);
+
+				preview.style.display = "block";
+				label.style.display = "block";
+			}
+		}
+
+	</script>
+
 </head>
 
+
 <body>
+
+
+	<!-- HEADER -->
+
 	<div th:insert="comman/header :: header"></div>
 
+
 	<div class="container my-5">
+
 		<h3>Cập nhật tác giả</h3>
 
+
 		<div class="card">
+
 			<div class="card-body">
+
 				<div class="col-md-10">
+
 
 					<form action="#"
 						th:action="@{/update-author/{id}(id=${author.id})}"
-						th:object="${author}" method="post">
+						th:object="${author}"
+						method="post"
+						enctype="multipart/form-data">
+
 
 						<div class="row">
 
+
+							<!-- ===================== -->
+							<!-- TÊN TÁC GIẢ -->
+							<!-- ===================== -->
+
 							<div class="form-group col-md-8">
-								<label for="name" class="col-form-label">Tên tác giả</label>
+
+								<label for="name"
+									class="col-form-label">
+
+									Tên tác giả
+
+								</label>
 
 								<input type="text"
 									th:field="*{name}"
 									class="form-control"
 									id="name"
-									placeholder="Nhập tên tác giả" />
+									placeholder="Nhập tên tác giả">
+
 							</div>
 
+
+							<!-- ===================== -->
+							<!-- MÔ TẢ -->
+							<!-- ===================== -->
+
 							<div class="form-group col-md-8">
-								<label for="description" class="col-form-label">Mô tả</label>
+
+								<label for="description"
+									class="col-form-label">
+
+									Mô tả
+
+								</label>
 
 								<input type="text"
 									th:field="*{description}"
 									class="form-control"
 									id="description"
-									placeholder="Nhập mô tả" />
+									placeholder="Nhập mô tả">
+
 							</div>
 
-							<div class="col-md-6">
+
+							<!-- ===================== -->
+							<!-- ẢNH HIỆN TẠI -->
+							<!-- ===================== -->
+
+							<div class="form-group col-md-8">
+
+								<label class="col-form-label d-block">
+
+									Ảnh tác giả hiện tại
+
+								</label>
+
+
+								<!-- Có ảnh -->
+
+								<div th:if="${author.image != null and !author.image.isEmpty()}">
+
+									<img th:src="@{'/uploads/authors/' + ${author.image}}"
+										th:alt="${author.name}"
+										style="
+											width: 160px;
+											height: 190px;
+											object-fit: cover;
+											object-position: center;
+											border-radius: 8px;
+											border: 1px solid #ddd;
+											box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+										">
+
+								</div>
+
+
+								<!-- Chưa có ảnh -->
+
+								<div th:if="${author.image == null or author.image.isEmpty()}"
+									class="text-muted">
+
+									<i class="fas fa-user"></i>
+
+									Chưa có ảnh tác giả
+
+								</div>
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- THAY ĐỔI ẢNH -->
+							<!-- ===================== -->
+
+							<div class="form-group col-md-8">
+
+								<label for="imageFile"
+									class="col-form-label">
+
+									Thay đổi ảnh tác giả
+
+								</label>
+
+
+								<input type="file"
+									name="imageFile"
+									id="imageFile"
+									class="form-control-file"
+									accept="image/*"
+									onchange="previewAuthorImage(event)">
+
+
+								<small class="form-text text-muted">
+
+									Nếu không chọn ảnh mới, hệ thống sẽ giữ nguyên ảnh hiện tại.
+
+								</small>
+
+
+								<!-- Preview ảnh mới -->
+
+								<p id="newImageLabel"
+									style="
+										display: none;
+										margin-top: 15px;
+										margin-bottom: 7px;
+										font-weight: 600;
+									">
+
+									Ảnh mới:
+
+								</p>
+
+
+								<img id="newAuthorPreview"
+									alt="Xem trước ảnh tác giả mới"
+									style="
+										display: none;
+										width: 160px;
+										height: 190px;
+										object-fit: cover;
+										object-position: center;
+										border-radius: 8px;
+										border: 1px solid #ddd;
+										box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+									">
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- LỖI UPLOAD -->
+							<!-- ===================== -->
+
+							<div class="col-md-8"
+								th:if="${uploadError != null}">
+
+								<div class="alert alert-danger"
+									th:text="${uploadError}">
+								</div>
+
+							</div>
+
+
+							<!-- ===================== -->
+							<!-- NÚT -->
+							<!-- ===================== -->
+
+							<div class="col-md-8 mt-3">
+
 								<input type="submit"
 									class="btn btn-success"
 									value="Cập nhật">
+
+
+								<a th:href="@{/authors}"
+									class="btn btn-secondary ml-2">
+
+									Quay lại
+
+								</a>
+
 							</div>
+
 
 						</div>
 
 					</form>
 
 				</div>
+
 			</div>
+
 		</div>
+
 	</div>
 
+
+	<!-- FOOTER -->
+
 	<div th:insert="comman/footer :: footer"></div>
+
+
 </body>
 
 </html>

@@ -1,0 +1,1296 @@
+/* =========================
+   TRANG CHỦ USER
+   ========================= */
+
+body {
+    margin: 0;
+    background: #f7f9fa;
+}
+
+.welcome-page {
+    width: 100%;
+}
+
+
+/* =========================
+   COVER
+   ========================= */
+
+.welcome-cover {
+    position: relative;
+
+    min-height: 520px;
+
+    display: flex;
+    align-items: center;
+
+    background-image: url('/images/cover.jpe');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+
+/* Lớp tối giúp chữ nổi hơn */
+
+.cover-overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(15, 24, 27, 0.78) 0%,
+            rgba(15, 24, 27, 0.55) 38%,
+            rgba(15, 24, 27, 0.15) 70%,
+            rgba(15, 24, 27, 0.05) 100%
+        );
+}
+
+
+/* Nội dung cover */
+
+.cover-content {
+    position: relative;
+    z-index: 2;
+
+    width: 90%;
+    max-width: 1150px;
+
+    margin: 0 auto;
+
+    color: white;
+}
+
+
+/* Dòng nhỏ */
+
+.cover-intro {
+    margin-bottom: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    color: #d7f3f6;
+}
+
+
+/* Quote chính */
+
+.cover-content h1 {
+    margin: 0 0 15px;
+
+    max-width: 600px;
+
+    font-family: 'Charm', cursive;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    color: #ffffff;
+
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+
+/* Quote phụ */
+
+.cover-quote {
+    max-width: 500px;
+
+    margin-bottom: 30px;
+
+    font-size: 18px;
+    line-height: 1.7;
+
+    color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* =========================
+   NÚT KHÁM PHÁ
+   ========================= */
+
+.explore-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 24px;
+
+    background: #20a4b8;
+    color: white;
+
+    border-radius: 5px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.25s ease;
+}
+
+.explore-button:hover {
+    background: #178b9d;
+
+    color: white;
+    text-decoration: none;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.explore-button i {
+    font-size: 13px;
+}
+
+
+/* =========================
+   PHẦN NỘI DUNG BÊN DƯỚI
+   ========================= */
+
+.welcome-content {
+    padding: 55px 0 70px;
+
+    background: #f7f9fa;
+}
+
+
+/* Tiêu đề section */
+
+.section-title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.section-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #20a4b8;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.section-title h2 {
+    margin: 0;
+
+    font-family: 'Charm', cursive;
+    font-size: 34px;
+    font-weight: 700;
+
+    color: #263238;
+}
+
+
+/* Xem tất cả */
+
+.view-all {
+    color: #1596aa;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.view-all:hover {
+    color: #0c7484;
+    text-decoration: none;
+}
+
+.view-all i {
+    margin-left: 5px;
+}
+
+
+/* Placeholder trước khi làm carousel */
+
+.coming-text {
+    padding: 35px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    color: #6c757d;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 768px) {
+
+    .welcome-cover {
+        min-height: 450px;
+    }
+
+    .cover-content h1 {
+        font-size: 42px;
+    }
+
+    .cover-quote {
+        font-size: 16px;
+    }
+
+    .section-title h2 {
+        font-size: 29px;
+    }
+}
+/* ================================================= */
+/* CÁC SECTION TRANG CHỦ */
+/* ================================================= */
+
+.welcome-section {
+    padding: 55px 0;
+    background: #f8fafb;
+}
+
+.section-soft {
+    background: #eef4f5;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 28px;
+}
+
+.section-label {
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    color: #18a5b9;
+}
+
+.section-title h2 {
+    margin: 4px 0 0;
+
+    font-family: 'Charm', cursive;
+    font-size: 36px;
+    font-weight: 700;
+
+    color: #263238;
+}
+
+.view-all {
+    color: #159caf;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.view-all:hover {
+    color: #117c8c;
+    text-decoration: none;
+}
+
+.view-all i {
+    margin-left: 6px;
+}
+
+
+/* ================================================= */
+/* DANH SÁCH TRƯỢT NGANG */
+/* ================================================= */
+
+.horizontal-list {
+    display: flex;
+    gap: 22px;
+
+    overflow-x: auto;
+
+    padding: 5px 4px 22px;
+
+    scroll-behavior: smooth;
+}
+
+.horizontal-list::-webkit-scrollbar {
+    height: 7px;
+}
+
+.horizontal-list::-webkit-scrollbar-thumb {
+    background: #b8c7ca;
+    border-radius: 10px;
+}
+
+
+/* =====================================================
+   KHÁM PHÁ SÁCH
+   ===================================================== */
+
+.book-discovery {
+    background: #f5f7f7;
+    padding: 55px 0 65px;
+}
+
+.welcome-container {
+    width: 90%;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   TIÊU ĐỀ SECTION
+   ========================= */
+
+.discovery-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 28px;
+}
+
+.section-label {
+    display: block;
+
+    color: #17a2b8;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 4px;
+}
+
+.discovery-heading h2 {
+    font-family: 'Charm', cursive;
+
+    font-size: 34px;
+    font-weight: 700;
+
+    color: #17333d;
+
+    margin: 0;
+}
+
+.view-all {
+    color: #159bb0;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.view-all i {
+    margin-left: 6px;
+}
+
+.view-all:hover {
+    color: #117f91;
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   THANH SÁCH TRƯỢT NGANG
+   ===================================================== */
+
+.book-scroll {
+    display: flex;
+
+    gap: 22px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 5px 3px 20px;
+
+    scroll-behavior: smooth;
+}
+
+
+/* scrollbar */
+
+.book-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.book-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.book-scroll::-webkit-scrollbar-thumb {
+    background: #c7d2d4;
+    border-radius: 20px;
+}
+
+
+/* =====================================================
+   CARD SÁCH
+   ===================================================== */
+
+.home-book-card {
+    flex: 0 0 170px;
+
+    width: 170px;
+
+    background: white;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
+
+    text-decoration: none !important;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.home-book-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+
+/* =====================================================
+   ẢNH BÌA
+   ===================================================== */
+
+.home-book-cover {
+    width: 170px;
+    height: 230px;
+
+    overflow: hidden;
+
+    background: #e8eded;
+}
+
+.home-book-cover img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* Không có ảnh */
+
+.no-book-cover {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e7eeee;
+
+    color: #9aabad;
+
+    font-size: 40px;
+}
+
+
+/* =====================================================
+   THÔNG TIN SÁCH
+   ===================================================== */
+
+.home-book-info {
+    padding: 12px 13px 14px;
+
+    min-height: 80px;
+}
+
+.home-book-info h3 {
+    color: #263b42;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    margin: 0 0 7px;
+
+
+    /* tối đa 2 dòng */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+.home-book-info span {
+    display: block;
+
+    color: #849195;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .book-discovery {
+        padding: 40px 0 50px;
+    }
+
+    .welcome-container {
+        width: 92%;
+    }
+
+    .discovery-heading h2 {
+        font-size: 28px;
+    }
+
+    .home-book-card {
+        flex-basis: 150px;
+        width: 150px;
+    }
+
+    .home-book-cover {
+        width: 150px;
+        height: 205px;
+    }
+}
+
+/* ================================================= */
+/* AUTHOR CARD */
+/* ================================================= */
+
+.author-card {
+    flex: 0 0 210px;
+
+    padding: 18px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.09);
+
+    text-align: center;
+
+    text-decoration: none;
+
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+.author-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    text-decoration: none;
+}
+
+.author-photo-wrapper {
+    width: 125px;
+    height: 125px;
+
+    margin: 0 auto 15px;
+}
+
+.author-photo {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+.author-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e6edef;
+
+    color: #8d9a9e;
+
+    font-size: 38px;
+}
+
+.author-card h3 {
+    margin-bottom: 8px;
+
+    font-family: 'Charm', cursive;
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #263238;
+}
+
+.author-card p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: #718086;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* ================================================= */
+/* CATEGORY */
+/* ================================================= */
+
+.category-card {
+    flex: 0 0 190px;
+
+    min-height: 135px;
+
+    padding: 22px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    text-align: center;
+}
+
+.category-icon {
+    font-size: 28px;
+
+    color: #18a5b9;
+
+    margin-bottom: 12px;
+}
+
+.category-card h3 {
+    font-size: 17px;
+
+    color: #263238;
+
+    margin: 0;
+}
+
+
+/* ================================================= */
+/* PUBLISHER */
+/* ================================================= */
+
+.publisher-card {
+    flex: 0 0 220px;
+
+    min-height: 130px;
+
+    padding: 22px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    text-align: center;
+}
+
+.publisher-icon {
+    font-size: 28px;
+
+    color: #18a5b9;
+
+    margin-bottom: 12px;
+}
+
+.publisher-card h3 {
+    margin: 0;
+
+    font-size: 17px;
+
+    color: #263238;
+}
+
+
+/* ================================================= */
+/* EMPTY */
+/* ================================================= */
+
+.empty-message {
+    padding: 25px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    color: #718086;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ================================================= */
+/* RESPONSIVE */
+/* ================================================= */
+
+@media (max-width: 768px) {
+
+    .welcome-section {
+        padding: 40px 0;
+    }
+
+    .section-title h2 {
+        font-size: 29px;
+    }
+
+    .book-card {
+        flex-basis: 160px;
+    }
+
+    .book-cover-wrapper {
+        height: 215px;
+    }
+
+    .author-card {
+        flex-basis: 185px;
+    }
+}
+
+/* =====================================================
+   TÁC GIẢ NỔI BẬT
+   ===================================================== */
+
+.author-discovery {
+    background: #ffffff;
+    padding: 55px 0 65px;
+}
+
+
+/* DANH SÁCH TÁC GIẢ */
+
+.author-scroll {
+    display: flex;
+    gap: 24px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 5px 3px 20px;
+
+    scroll-behavior: smooth;
+}
+
+
+/* THANH CUỘN */
+
+.author-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.author-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.author-scroll::-webkit-scrollbar-thumb {
+    background: #c7d2d4;
+    border-radius: 20px;
+}
+
+
+/* =====================================================
+   CARD TÁC GIẢ
+   ===================================================== */
+
+.home-author-card {
+    flex: 0 0 210px;
+    width: 210px;
+
+    background: #f7f9f9;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    text-decoration: none !important;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.09);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.home-author-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =====================================================
+   ẢNH TÁC GIẢ
+   ===================================================== */
+
+.home-author-image {
+    width: 100%;
+    height: 210px;
+
+    overflow: hidden;
+
+    background: #e5ecec;
+}
+
+
+.home-author-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    /* ưu tiên giữ khuôn mặt */
+    object-position: center top;
+}
+
+
+/* TÁC GIẢ CHƯA CÓ ẢNH */
+
+.no-author-image {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 46px;
+
+    color: #9aabad;
+
+    background: #e5ecec;
+}
+
+
+/* =====================================================
+   THÔNG TIN TÁC GIẢ
+   ===================================================== */
+
+.home-author-info {
+    padding: 14px 15px 17px;
+}
+
+
+.home-author-info h3 {
+    margin: 0 0 8px;
+
+    color: #203a43;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    line-height: 1.35;
+}
+
+
+.home-author-info p {
+    margin: 0;
+
+    color: #748387;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+
+    /* chỉ hiện tối đa 3 dòng */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .author-discovery {
+        padding: 40px 0 50px;
+    }
+
+    .home-author-card {
+        flex: 0 0 185px;
+        width: 185px;
+    }
+
+    .home-author-image {
+        height: 185px;
+    }
+}
+
+/* =====================================================
+   KHÁM PHÁ THEO THỂ LOẠI
+   ===================================================== */
+
+.category-discovery {
+    background: #f5f7f7;
+    padding: 55px 0 65px;
+}
+
+
+/* DANH SÁCH THỂ LOẠI */
+
+.category-scroll {
+    display: flex;
+    gap: 18px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 5px 3px 20px;
+
+    scroll-behavior: smooth;
+}
+
+
+/* THANH CUỘN */
+
+.category-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.category-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.category-scroll::-webkit-scrollbar-thumb {
+    background: #c7d2d4;
+    border-radius: 20px;
+}
+
+
+/* =====================================================
+   CARD THỂ LOẠI
+   ===================================================== */
+
+.home-category-card {
+    flex: 0 0 245px;
+
+    min-height: 120px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 17px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    text-decoration: none !important;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.home-category-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+
+/* =====================================================
+   ICON
+   ===================================================== */
+
+.category-icon {
+    flex: 0 0 55px;
+
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e3f2f4;
+
+    color: #17a2b8;
+
+    font-size: 22px;
+}
+
+
+/* =====================================================
+   THÔNG TIN THỂ LOẠI
+   ===================================================== */
+
+.category-info {
+    min-width: 0;
+}
+
+
+.category-info h3 {
+    margin: 0 0 10px;
+
+    color: #203a43;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+.category-info span {
+    color: #159bb0;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.category-info span i {
+    margin-left: 5px;
+
+    font-size: 10px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .category-discovery {
+        padding: 40px 0 50px;
+    }
+
+    .home-category-card {
+        flex: 0 0 215px;
+
+        min-height: 105px;
+
+        padding: 17px;
+    }
+
+    .category-icon {
+        flex-basis: 48px;
+
+        width: 48px;
+        height: 48px;
+
+        font-size: 19px;
+    }
+}
+
+/* =====================================================
+   NHÀ XUẤT BẢN
+   ===================================================== */
+
+.publisher-discovery {
+    background: #ffffff;
+    padding: 55px 0 70px;
+}
+
+
+/* DANH SÁCH */
+
+.publisher-scroll {
+    display: flex;
+    gap: 18px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 5px 3px 20px;
+
+    scroll-behavior: smooth;
+}
+
+
+.publisher-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.publisher-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.publisher-scroll::-webkit-scrollbar-thumb {
+    background: #c7d2d4;
+    border-radius: 20px;
+}
+
+
+/* =====================================================
+   CARD NHÀ XUẤT BẢN
+   ===================================================== */
+
+.home-publisher-card {
+    flex: 0 0 260px;
+
+    min-height: 125px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 22px;
+
+    background: #f6f9f9;
+
+    border-radius: 12px;
+
+    border: 1px solid #edf1f1;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+
+    text-decoration: none !important;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.home-publisher-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.13);
+}
+
+
+/* =====================================================
+   ICON
+   ===================================================== */
+
+.publisher-icon {
+    flex: 0 0 58px;
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #dff1f3;
+
+    color: #159db2;
+
+    font-size: 23px;
+}
+
+
+/* =====================================================
+   THÔNG TIN
+   ===================================================== */
+
+.publisher-info {
+    min-width: 0;
+}
+
+
+.publisher-info h3 {
+    margin: 0 0 10px;
+
+    color: #203a43;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+
+.publisher-info span {
+    color: #159bb0;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.publisher-info span i {
+    margin-left: 5px;
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .publisher-discovery {
+        padding: 40px 0 50px;
+    }
+
+    .home-publisher-card {
+        flex: 0 0 225px;
+
+        min-height: 110px;
+
+        padding: 18px;
+    }
+
+    .publisher-icon {
+        flex-basis: 50px;
+
+        width: 50px;
+        height: 50px;
+
+        font-size: 20px;
+    }
+}

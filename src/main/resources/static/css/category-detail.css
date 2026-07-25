@@ -1,0 +1,264 @@
+/* =============================================
+   CATEGORY DETAIL
+   ============================================= */
+
+.category-detail-page {
+    min-height: 80vh;
+    background: #f5f7f7;
+    padding: 55px 0 70px;
+}
+
+.category-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* =============================================
+   HEADER
+   ============================================= */
+
+.category-heading {
+    margin-bottom: 45px;
+}
+
+.category-label {
+    display: block;
+
+    color: #17a2b8;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 5px;
+}
+
+.category-heading h1 {
+    margin: 0 0 8px;
+
+    font-family: 'Charm', cursive;
+
+    font-size: 42px;
+    font-weight: 700;
+
+    color: #18343d;
+}
+
+.category-heading p {
+    margin: 0;
+
+    color: #748387;
+
+    font-size: 15px;
+}
+
+
+/* =============================================
+   SECTION TITLE
+   ============================================= */
+
+.category-section-title {
+    margin-bottom: 24px;
+}
+
+.category-section-title h2 {
+    margin: 0;
+
+    color: #263b42;
+
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.category-section-title i {
+    color: #17a2b8;
+    margin-right: 8px;
+}
+
+
+/* =============================================
+   BOOK GRID
+   ============================================= */
+
+.category-book-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(160px, 1fr));
+
+    gap: 25px;
+}
+
+
+/* CARD */
+
+.category-book-card {
+    max-width: 185px;
+
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    text-decoration: none !important;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.09);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.category-book-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =============================================
+   COVER
+   ============================================= */
+
+.category-book-cover {
+    width: 100%;
+    height: 235px;
+
+    overflow: hidden;
+
+    background: #e5ecec;
+}
+
+.category-book-cover img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* NO COVER */
+
+.category-no-cover {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #9aabad;
+
+    font-size: 42px;
+}
+
+
+/* =============================================
+   BOOK INFO
+   ============================================= */
+
+.category-book-info {
+    padding: 12px 13px 15px;
+}
+
+.category-book-info h3 {
+    margin: 0 0 6px;
+
+    color: #263b42;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+.category-book-info p {
+    margin: 0;
+
+    color: #849195;
+
+    font-size: 12px;
+}
+
+
+/* =============================================
+   EMPTY
+   ============================================= */
+
+.empty-category {
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #8b999c;
+}
+
+.empty-category i {
+    display: block;
+
+    margin-bottom: 12px;
+
+    font-size: 40px;
+
+    color: #b5c1c3;
+}
+
+
+/* =============================================
+   BACK
+   ============================================= */
+
+.back-area {
+    margin-top: 45px;
+}
+
+.back-area a {
+    color: #159bb0;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.back-area i {
+    margin-right: 6px;
+}
+
+.back-area a:hover {
+    color: #117f91;
+    text-decoration: none;
+}
+
+
+/* =============================================
+   MOBILE
+   ============================================= */
+
+@media (max-width: 768px) {
+
+    .category-detail-page {
+        padding: 40px 0 55px;
+    }
+
+    .category-heading h1 {
+        font-size: 34px;
+    }
+
+    .category-book-grid {
+        grid-template-columns:
+            repeat(auto-fill, minmax(140px, 1fr));
+
+        gap: 18px;
+    }
+
+    .category-book-cover {
+        height: 205px;
+    }
+}

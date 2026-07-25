@@ -35,20 +35,89 @@ public class Book {
 	@Column(name = "description", length = 250, nullable = false)
 	private String description;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
-	@JoinTable(name = "books_authors", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "author_id") })
+	// Ảnh bìa của sách
+	// MySQL chỉ lưu tên file, ví dụ: de-men.jpg
+	@Column(name = "cover_image", length = 255)
+	private String coverImage;
+
+
+	// =========================
+	// TÁC GIẢ
+	// =========================
+
+	@ManyToMany(
+			fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.REMOVE
+			}
+	)
+	@JoinTable(
+			name = "books_authors",
+			joinColumns = {
+					@JoinColumn(name = "book_id")
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name = "author_id")
+			}
+	)
 	private Set<Author> authors = new HashSet<Author>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "books_categories", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "category_id") })
+
+	// =========================
+	// THỂ LOẠI
+	// =========================
+
+	@ManyToMany(
+			fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE
+			}
+	)
+	@JoinTable(
+			name = "books_categories",
+			joinColumns = {
+					@JoinColumn(name = "book_id")
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name = "category_id")
+			}
+	)
 	private Set<Category> categories = new HashSet<Category>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "books_publishers", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "publisher_id") })
+
+	// =========================
+	// NHÀ XUẤT BẢN
+	// =========================
+
+	@ManyToMany(
+			fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE
+			}
+	)
+	@JoinTable(
+			name = "books_publishers",
+			joinColumns = {
+					@JoinColumn(name = "book_id")
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name = "publisher_id")
+			}
+	)
 	private Set<Publisher> publishers = new HashSet<Publisher>();
+
+
+	// =========================
+	// CONSTRUCTOR
+	// =========================
+
+	public Book() {
+		super();
+	}
 
 	public Book(String isbn, String name, String serialName, String description) {
 		this.isbn = isbn;
@@ -56,6 +125,11 @@ public class Book {
 		this.serialName = serialName;
 		this.description = description;
 	}
+
+
+	// =========================
+	// AUTHOR METHODS
+	// =========================
 
 	public void addAuthors(Author author) {
 		this.authors.add(author);
@@ -67,6 +141,11 @@ public class Book {
 		author.getBooks().remove(this);
 	}
 
+
+	// =========================
+	// CATEGORY METHODS
+	// =========================
+
 	public void addCategories(Category category) {
 		this.categories.add(category);
 		category.getBooks().add(this);
@@ -77,6 +156,11 @@ public class Book {
 		category.getBooks().remove(this);
 	}
 
+
+	// =========================
+	// PUBLISHER METHODS
+	// =========================
+
 	public void addPublishers(Publisher publisher) {
 		this.publishers.add(publisher);
 		publisher.getBooks().add(this);
@@ -86,6 +170,11 @@ public class Book {
 		this.publishers.remove(publisher);
 		publisher.getBooks().remove(this);
 	}
+
+
+	// =========================
+	// GETTER / SETTER
+	// =========================
 
 	public Long getId() {
 		return id;
@@ -127,6 +216,14 @@ public class Book {
 		this.description = description;
 	}
 
+	public String getCoverImage() {
+		return coverImage;
+	}
+
+	public void setCoverImage(String coverImage) {
+		this.coverImage = coverImage;
+	}
+
 	public Set<Author> getAuthors() {
 		return authors;
 	}
@@ -150,9 +247,4 @@ public class Book {
 	public void setPublishers(Set<Publisher> publishers) {
 		this.publishers = publishers;
 	}
-
-	public Book() {
-		super();
-	}
-
 }

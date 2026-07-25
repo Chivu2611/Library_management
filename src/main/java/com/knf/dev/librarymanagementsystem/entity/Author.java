@@ -27,14 +27,40 @@ public class Author {
 	@Column(name = "description", length = 250, nullable = false)
 	private String description;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE }, mappedBy = "authors")
+	// Ảnh tác giả
+	// Database chỉ lưu tên file ảnh
+	@Column(name = "image", length = 255)
+	private String image;
+
+	@ManyToMany(
+			fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.REMOVE
+			},
+			mappedBy = "authors"
+	)
 	private Set<Book> books = new HashSet<Book>();
+
+
+	// =========================
+	// CONSTRUCTOR
+	// =========================
+
+	public Author() {
+		super();
+	}
 
 	public Author(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
+
+
+	// =========================
+	// GETTER / SETTER
+	// =========================
 
 	public Long getId() {
 		return id;
@@ -60,6 +86,14 @@ public class Author {
 		this.description = description;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public Set<Book> getBooks() {
 		return books;
 	}
@@ -67,9 +101,4 @@ public class Author {
 	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
-
-	public Author() {
-		super();
-	}
-
 }

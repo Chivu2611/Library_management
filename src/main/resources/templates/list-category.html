@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title th:text="${category.name} + ' - Thư viện'">
+        Chi tiết thể loại
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+    <!-- Font Charm -->
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/category-detail.css}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div th:insert="comman/header :: header"></div>
+
+
+<main class="category-detail-page">
+
+    <div class="category-container">
+
+        <!-- TIÊU ĐỀ -->
+        <section class="category-heading">
+
+            <span class="category-label">
+                THỂ LOẠI
+            </span>
+
+            <h1 th:text="${category.name}">
+                Tên thể loại
+            </h1>
+
+            <p>
+                Khám phá những cuốn sách thuộc thể loại này.
+            </p>
+
+        </section>
+
+
+        <!-- DANH SÁCH SÁCH -->
+        <section class="category-books">
+
+            <div class="category-section-title">
+
+                <h2>
+                    <i class="fas fa-book-open"></i>
+                    Sách thuộc thể loại
+                </h2>
+
+            </div>
+
+
+            <div class="category-book-grid">
+
+                <a th:each="book : ${category.books}"
+                   th:href="@{/book/{id}(id=${book.id})}"
+                   class="category-book-card">
+
+
+                    <!-- ẢNH BÌA -->
+                    <div class="category-book-cover">
+
+                        <img th:if="${book.coverImage != null}"
+                             th:src="@{'/uploads/books/' + ${book.coverImage}}"
+                             th:alt="${book.name}">
+
+                        <div th:unless="${book.coverImage != null}"
+                             class="category-no-cover">
+
+                            <i class="fas fa-book"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- THÔNG TIN -->
+                    <div class="category-book-info">
+
+                        <h3 th:text="${book.name}">
+                            Tên sách
+                        </h3>
+
+                        <p th:text="${book.serialName}">
+                            Bộ sách
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- KHÔNG CÓ SÁCH -->
+            <div th:if="${category.books == null or category.books.isEmpty()}"
+                 class="empty-category">
+
+                <i class="fas fa-book-open"></i>
+
+                <p>
+                    Hiện chưa có sách nào thuộc thể loại này.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUAY LẠI -->
+        <div class="back-area">
+
+            <a th:href="@{/categories}">
+                <i class="fas fa-arrow-left"></i>
+                Xem tất cả thể loại
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+<div th:insert="comman/footer :: footer"></div>
+
+</body>
+</html>

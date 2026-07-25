@@ -1,75 +1,738 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<head>
 
-<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
-	rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<link rel="stylesheet" th:href="@{/css/header.css}">
-	<meta charset="UTF-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Chi tiết sách</title>
+    <title th:text="${book.name} + ' - Thư viện'">
+        Chi tiết sách
+    </title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-	<link rel="stylesheet"
-		href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-	<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
-      rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" th:href="@{/css/header.css}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+    <!-- Font Charm -->
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+
+    <style>
+
+        /* =========================================
+           PAGE
+           ========================================= */
+
+        .book-detail-page {
+            min-height: 80vh;
+            background: #f5f7f7;
+            padding: 50px 0 70px;
+        }
+
+
+        /* =========================================
+           CARD
+           ========================================= */
+
+        .book-detail-card {
+            max-width: 1100px;
+            margin: auto;
+
+            background: #ffffff;
+
+            border-radius: 14px;
+
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.09);
+
+            overflow: hidden;
+        }
+
+        .book-main {
+            padding: 40px;
+        }
+
+
+        /* =========================================
+           COVER
+           ========================================= */
+
+        .book-cover-wrapper {
+            text-align: center;
+        }
+
+        .book-cover {
+            width: 230px;
+            height: 330px;
+
+            object-fit: cover;
+
+            border-radius: 9px;
+
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.20);
+        }
+
+        .no-cover {
+            width: 230px;
+            height: 330px;
+
+            margin: auto;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background: #e5ecec;
+
+            border-radius: 9px;
+
+            color: #96a8aa;
+        }
+
+        .no-cover i {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+
+        /* =========================================
+           BOOK INFO
+           ========================================= */
+
+        .book-label {
+            display: block;
+
+            color: #17a2b8;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 5px;
+        }
+
+        .book-name {
+            margin: 0 0 12px;
+
+            font-family: 'Charm', cursive;
+
+            font-size: 42px;
+            font-weight: 700;
+
+            line-height: 1.2;
+
+            color: #19363e;
+        }
+
+        .book-series {
+            color: #849295;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =========================================
+           METADATA
+           ========================================= */
+
+        .book-meta {
+            border-top: 1px solid #eeeeee;
+
+            margin-top: 15px;
+        }
+
+        .book-info-row {
+            display: flex;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .book-info-label {
+            width: 135px;
+
+            flex-shrink: 0;
+
+            font-weight: 600;
+
+            color: #526267;
+        }
+
+        .book-info-value {
+            color: #263b42;
+        }
+
+
+        /* =========================================
+           LINK TÁC GIẢ / CATEGORY / PUBLISHER
+           ========================================= */
+
+        .detail-link {
+            color: #159bb0;
+
+            font-weight: 500;
+
+            text-decoration: none;
+        }
+
+        .detail-link:hover {
+            color: #117d8e;
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           USER ACTIONS
+           ========================================= */
+
+        .reader-actions {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 28px;
+        }
+
+        .borrow-button {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 11px 20px;
+
+            border: none;
+            border-radius: 7px;
+
+            background: #17a2b8;
+
+            color: #ffffff !important;
+
+            font-weight: 600;
+
+            text-decoration: none !important;
+
+            transition: 0.2s;
+        }
+
+        .borrow-button:hover {
+            background: #138496;
+
+            transform: translateY(-1px);
+        }
+
+        .favorite-button {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 10px 19px;
+
+            background: #ffffff;
+
+            color: #59686c !important;
+
+            border: 1px solid #d4dddd;
+
+            border-radius: 7px;
+
+            font-weight: 600;
+
+            text-decoration: none !important;
+
+            transition: 0.2s;
+        }
+
+        .favorite-button:hover {
+            border-color: #17a2b8;
+
+            color: #17a2b8 !important;
+        }
+
+
+        /* =========================================
+           ADMIN
+           ========================================= */
+
+        .admin-actions {
+            margin-top: 28px;
+        }
+
+
+        /* =========================================
+           DESCRIPTION
+           ========================================= */
+
+        .book-description-section {
+            padding: 32px 40px 38px;
+
+            border-top: 1px solid #eeeeee;
+        }
+
+        .description-label {
+            display: block;
+
+            color: #17a2b8;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 5px;
+        }
+
+        .book-description-section h2 {
+            margin: 0 0 15px;
+
+            font-family: 'Charm', cursive;
+
+            font-size: 28px;
+            font-weight: 700;
+
+            color: #263b42;
+        }
+
+        .book-description {
+            margin: 0;
+
+            max-width: 850px;
+
+            color: #59686c;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           BACK
+           ========================================= */
+
+        .back-area {
+            max-width: 1100px;
+
+            margin: 25px auto 0;
+        }
+
+        .back-area a {
+            color: #159bb0;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+        .back-area i {
+            margin-right: 6px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+
+        @media (max-width: 768px) {
+
+            .book-main {
+                padding: 25px;
+            }
+
+            .book-cover-wrapper {
+                margin-bottom: 30px;
+            }
+
+            .book-cover,
+            .no-cover {
+                width: 190px;
+                height: 275px;
+            }
+
+            .book-name {
+                font-size: 34px;
+            }
+
+            .book-info-row {
+                display: block;
+            }
+
+            .book-info-label {
+                width: auto;
+
+                margin-bottom: 5px;
+            }
+
+            .book-description-section {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-	<div th:insert="comman/header :: header"></div>
+<div th:insert="comman/header :: header"></div>
 
-	<div class="container my-2">
-		<div class="card">
-			<div class="card-body">
-				<div class="container my-5">
-					<div class="col-md-12">
-						<div>
 
-							<table class="table table-striped table-responsive-md">
 
-								<thead>
-									<tr>
-										<th>ISBN</th>
-										<th>Thể loại</th>
-										<th>Tên sách</th>
-										<th>Tác giả</th>
-										<th>Nhà xuất bản</th>
-										<th>Tên bộ sách</th>
-										<th>Mô tả</th>
-									</tr>
-								</thead>
+<main class="book-detail-page">
 
-								<tbody>
-									<tr>
-										<td th:text="${book.isbn}"></td>
-										<td th:text="${book.categories[0].name}"></td>
-										<td th:text="${book.name}"></td>
-										<td th:text="${book.authors[0].name}"></td>
-										<td th:text="${book.publishers[0].name}"></td>
-										<td th:text="${book.serialName}"></td>
-										<td th:text="${book.description}"></td>
-									</tr>
-								</tbody>
+    <div class="container">
 
-							</table>
+        <div class="book-detail-card">
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<div th:insert="comman/footer :: footer"></div>
+            <!-- ===================================== -->
+            <!-- THÔNG TIN CHÍNH -->
+            <!-- ===================================== -->
+
+            <div class="book-main">
+
+                <div class="row">
+
+
+                    <!-- ẢNH BÌA -->
+
+                    <div class="col-md-4 book-cover-wrapper">
+
+                        <img th:if="${book.coverImage != null and !book.coverImage.isEmpty()}"
+                             th:src="@{'/uploads/books/' + ${book.coverImage}}"
+                             class="book-cover"
+                             th:alt="${book.name}">
+
+
+                        <div th:if="${book.coverImage == null or book.coverImage.isEmpty()}"
+                             class="no-cover">
+
+                            <i class="fas fa-book"></i>
+
+                            <span>Chưa có ảnh bìa</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- THÔNG TIN -->
+
+                    <div class="col-md-8">
+
+                        <span class="book-label">
+                            THƯ VIỆN
+                        </span>
+
+                        <h1 class="book-name"
+                            th:text="${book.name}">
+                            Tên sách
+                        </h1>
+
+
+                        <p class="book-series">
+
+                            <span th:if="${book.serialName != null and !book.serialName.isEmpty()}">
+
+                                Thuộc bộ:
+                                <strong th:text="${book.serialName}"></strong>
+
+                            </span>
+
+                        </p>
+
+
+                        <div class="book-meta">
+
+
+                            <!-- TÁC GIẢ -->
+
+                            <div class="book-info-row">
+
+                                <div class="book-info-label">
+                                    Tác giả
+                                </div>
+
+                                <div class="book-info-value">
+
+                                    <span th:each="author, stat : ${book.authors}">
+
+                                        <a th:href="@{/author/{id}(id=${author.id})}"
+                                           th:text="${author.name}"
+                                           class="detail-link">
+                                            Tác giả
+                                        </a>
+
+                                        <span th:if="${!stat.last}">
+                                            ,
+                                        </span>
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- THỂ LOẠI -->
+
+                            <div class="book-info-row">
+
+                                <div class="book-info-label">
+                                    Thể loại
+                                </div>
+
+                                <div class="book-info-value">
+
+                                    <span th:each="category, stat : ${book.categories}">
+
+                                        <a th:href="@{/category/{id}(id=${category.id})}"
+                                           th:text="${category.name}"
+                                           class="detail-link">
+                                            Thể loại
+                                        </a>
+
+                                        <span th:if="${!stat.last}">
+                                            ,
+                                        </span>
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- NHÀ XUẤT BẢN -->
+
+                            <div class="book-info-row">
+
+                                <div class="book-info-label">
+                                    Nhà xuất bản
+                                </div>
+
+                                <div class="book-info-value">
+
+                                    <span th:each="publisher, stat : ${book.publishers}">
+
+                                        <a th:href="@{/publisher/{id}(id=${publisher.id})}"
+                                           th:text="${publisher.name}"
+                                           class="detail-link">
+                                            Nhà xuất bản
+                                        </a>
+
+                                        <span th:if="${!stat.last}">
+                                            ,
+                                        </span>
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ISBN -->
+
+                            <div class="book-info-row">
+
+                                <div class="book-info-label">
+                                    ISBN
+                                </div>
+
+                                <div class="book-info-value"
+                                     th:text="${book.isbn}">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================= -->
+                        <!-- USER -->
+                        <!-- ================================= -->
+
+                        <div class="reader-actions"
+                             sec:authorize="hasRole('USER')">
+
+							 <div th:if="${successMessage != null}"
+								class="alert alert-success mt-3"
+								th:text="${successMessage}">
+							</div>
+
+							<div th:if="${errorMessage != null}"
+								class="alert alert-danger mt-3"
+								th:text="${errorMessage}">
+							</div>
+
+                            <!-- ========================= -->
+<!-- CHƯA MƯỢN -->
+<!-- ========================= -->
+
+<form th:if="${!isBorrowing}"
+      th:action="@{/borrow/{id}(id=${book.id})}"
+      method="post"
+      style="display:inline-block;">
+
+    <button type="submit"
+            class="btn btn-info">
+
+        <i class="fas fa-book-reader"></i>
+        Mượn sách
+
+    </button>
+
+</form>
+
+
+<!-- ========================= -->
+<!-- ĐANG MƯỢN -->
+<!-- ========================= -->
+
+<button th:if="${isBorrowing}"
+        type="button"
+        class="btn btn-secondary"
+        disabled>
+
+    <i class="fas fa-check-circle"></i>
+    Đang mượn
+
+</button>
+
+
+                            <!-- CHƯA YÊU THÍCH -->
+
+							<form th:if="${!isFavorite}"
+								th:action="@{/favorite/{id}(id=${book.id})}"
+								method="post"
+								style="display:inline-block;">
+
+								<button type="submit"
+										class="btn btn-outline-secondary">
+
+									<i class="far fa-heart"></i>
+									Yêu thích
+
+								</button>
+
+							</form>
+
+
+							<!-- ĐÃ YÊU THÍCH -->
+
+							<form th:if="${isFavorite}"
+								th:action="@{/unfavorite/{id}(id=${book.id})}"
+								method="post"
+								style="display:inline-block;">
+
+								<button type="submit"
+										class="btn btn-danger">
+
+									<i class="fas fa-heart"></i>
+									Đã yêu thích
+
+								</button>
+
+							</form>
+
+                        </div>
+
+
+                        <!-- ================================= -->
+                        <!-- ADMIN -->
+                        <!-- ================================= -->
+
+                        <div class="admin-actions"
+                             sec:authorize="hasRole('ADMIN')">
+
+                            <a th:href="@{/update/{id}(id=${book.id})}"
+                               class="btn btn-warning">
+
+                                <i class="fas fa-edit"></i>
+
+                                Cập nhật sách
+
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================================== -->
+            <!-- GIỚI THIỆU -->
+            <!-- ===================================== -->
+
+            <section class="book-description-section">
+
+                <span class="description-label">
+                    GIỚI THIỆU
+                </span>
+
+                <h2>
+                    Về cuốn sách
+                </h2>
+
+                <p class="book-description"
+                   th:text="${book.description}">
+
+                    Nội dung giới thiệu sách.
+
+                </p>
+
+            </section>
+
+
+        </div>
+
+
+        <!-- QUAY LẠI -->
+
+        <div class="back-area">
+
+            <a th:href="@{/books}">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Quay lại danh sách sách
+
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<div th:insert="comman/footer :: footer"></div>
 
 </body>
 

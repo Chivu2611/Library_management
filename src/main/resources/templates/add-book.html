@@ -1,146 +1,282 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
-	rel="stylesheet">
-
-<link rel="stylesheet" th:href="@{/css/header.css}">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+
     <title>Thêm sách</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
     <link rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 
     <script>
         function validateForm() {
             var isValid = true;
-            var inputs = document.querySelectorAll('.form-control');
+            var inputs = document.querySelectorAll('.required-field');
 
             inputs.forEach(function (input) {
+
                 if (input.value.trim() === '') {
+
                     isValid = false;
-                    input.nextElementSibling.textContent = 'Vui lòng không để trống trường này.';
-                    input.nextElementSibling.style.color = 'red';
+
+                    var error = input.nextElementSibling;
+
+                    if (error) {
+                        error.textContent = 'Vui lòng không để trống trường này.';
+                        error.style.color = 'red';
+                    }
+
                 } else {
-                    input.nextElementSibling.textContent = '';
+
+                    var error = input.nextElementSibling;
+
+                    if (error) {
+                        error.textContent = '';
+                    }
                 }
             });
 
             return isValid;
         }
+
+
+        // Hiển thị ảnh xem trước
+        function previewCover(event) {
+
+            var image = document.getElementById('coverPreview');
+
+            if (event.target.files && event.target.files[0]) {
+
+                image.src = URL.createObjectURL(event.target.files[0]);
+
+                image.style.display = 'block';
+            }
+        }
     </script>
+
 </head>
 
 <body>
 
 <div th:insert="comman/header :: header"></div>
 
+
 <div class="container my-5">
 
     <h3>Thêm sách</h3>
 
     <div class="card">
+
         <div class="card-body">
+
             <div class="col-md-10">
 
                 <form action="#"
                       th:action="@{/add-book}"
                       th:object="${book}"
                       method="post"
+                      enctype="multipart/form-data"
                       onsubmit="return validateForm()">
 
                     <div class="row">
 
+
+                        <!-- ISBN -->
+
                         <div class="form-group col-md-8">
-                            <label for="isbn" class="col-form-label">ISBN</label>
+
+                            <label for="isbn" class="col-form-label">
+                                ISBN
+                            </label>
+
                             <input type="text"
                                    th:field="*{isbn}"
-                                   class="form-control"
+                                   class="form-control required-field"
                                    id="isbn"
                                    placeholder="Nhập mã ISBN">
+
                             <span></span>
+
                         </div>
 
+
+                        <!-- TÊN SÁCH -->
+
                         <div class="form-group col-md-8">
-                            <label for="name" class="col-form-label">Tên sách</label>
+
+                            <label for="name" class="col-form-label">
+                                Tên sách
+                            </label>
+
                             <input type="text"
                                    th:field="*{name}"
-                                   class="form-control"
+                                   class="form-control required-field"
                                    id="name"
                                    placeholder="Nhập tên sách">
+
                             <span></span>
+
                         </div>
 
+
+                        <!-- TÊN BỘ SÁCH -->
+
                         <div class="form-group col-md-8">
-                            <label for="serialName" class="col-form-label">Tên bộ sách</label>
+
+                            <label for="serialName" class="col-form-label">
+                                Tên bộ sách
+                            </label>
+
                             <input type="text"
                                    th:field="*{serialName}"
-                                   class="form-control"
+                                   class="form-control required-field"
                                    id="serialName"
                                    placeholder="Nhập tên bộ sách">
+
                             <span></span>
+
                         </div>
 
+
+                        <!-- MÔ TẢ -->
+
                         <div class="form-group col-md-8">
-                            <label for="description" class="col-form-label">Mô tả</label>
+
+                            <label for="description" class="col-form-label">
+                                Mô tả
+                            </label>
+
                             <input type="text"
                                    th:field="*{description}"
-                                   class="form-control"
+                                   class="form-control required-field"
                                    id="description"
                                    placeholder="Nhập mô tả sách">
+
                             <span></span>
+
                         </div>
 
-                        <div class="form-group col-md-8">
-                            <label class="col-form-label">Thể loại</label>
 
-                            <select th:field="*{categories}" class="form-control">
+                        <!-- ẢNH BÌA -->
+
+                        <div class="form-group col-md-8">
+
+                            <label for="coverFile" class="col-form-label">
+                                Ảnh bìa
+                            </label>
+
+                            <input type="file"
+                                   name="coverFile"
+                                   id="coverFile"
+                                   class="form-control-file"
+                                   accept="image/*"
+                                   onchange="previewCover(event)">
+
+                            <small class="form-text text-muted">
+                                Chọn ảnh JPG, JPEG, PNG hoặc WEBP.
+                            </small>
+
+
+                            <!-- Xem trước ảnh -->
+
+                            <img id="coverPreview"
+                                 alt="Xem trước ảnh bìa"
+                                 style="
+                                    display: none;
+                                    width: 150px;
+                                    height: 210px;
+                                    object-fit: cover;
+                                    margin-top: 15px;
+                                    border-radius: 5px;
+                                    border: 1px solid #ddd;
+                                 ">
+
+                        </div>
+
+
+                        <!-- THỂ LOẠI -->
+
+                        <div class="form-group col-md-8">
+
+                            <label class="col-form-label">
+                                Thể loại
+                            </label>
+
+                            <select th:field="*{categories}"
+                                    class="form-control">
+
                                 <option th:each="category : ${categories}"
                                         th:value="${category.id}"
                                         th:text="${category.name}">
                                 </option>
+
                             </select>
 
-                            <span></span>
                         </div>
 
-                        <div class="form-group col-md-8">
-                            <label class="col-form-label">Tác giả</label>
 
-                            <select th:field="*{authors}" class="form-control">
+                        <!-- TÁC GIẢ -->
+
+                        <div class="form-group col-md-8">
+
+                            <label class="col-form-label">
+                                Tác giả
+                            </label>
+
+                            <select th:field="*{authors}"
+                                    class="form-control">
+
                                 <option th:each="author : ${authors}"
                                         th:value="${author.id}"
                                         th:text="${author.name}">
                                 </option>
+
                             </select>
 
-                            <span></span>
                         </div>
 
-                        <div class="form-group col-md-8">
-                            <label class="col-form-label">Nhà xuất bản</label>
 
-                            <select th:field="*{publishers}" class="form-control">
+                        <!-- NHÀ XUẤT BẢN -->
+
+                        <div class="form-group col-md-8">
+
+                            <label class="col-form-label">
+                                Nhà xuất bản
+                            </label>
+
+                            <select th:field="*{publishers}"
+                                    class="form-control">
+
                                 <option th:each="publisher : ${publishers}"
                                         th:value="${publisher.id}"
                                         th:text="${publisher.name}">
                                 </option>
+
                             </select>
 
-                            <span></span>
                         </div>
 
-                        <div class="col-md-6">
+
+                        <!-- SUBMIT -->
+
+                        <div class="col-md-8 mt-3">
+
                             <input type="submit"
                                    class="btn btn-success"
                                    value="Thêm sách">
+
                         </div>
 
                     </div>
@@ -148,12 +284,16 @@
                 </form>
 
             </div>
+
         </div>
+
     </div>
 
 </div>
 
+
 <div th:insert="comman/footer :: footer"></div>
 
 </body>
+
 </html>

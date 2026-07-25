@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Sách của tôi</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+    <!-- Font Charm -->
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          th:href="@{/css/header.css}">
+
+    <link rel="stylesheet" th:href="@{/css/my-borrows.css}">
+
+    <style>
+
+        body {
+            background: #f5f7f7;
+        }
+
+        .my-books-page {
+            min-height: 80vh;
+            padding: 45px 0 70px;
+        }
+
+        /* ==============================
+           TIÊU ĐỀ
+           ============================== */
+
+        .page-label {
+            color: #17a2b8;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 3px;
+        }
+
+        .page-title {
+            font-family: 'Charm', cursive;
+
+            font-size: 40px;
+            font-weight: 700;
+
+            color: #183840;
+
+            margin-top: 4px;
+            margin-bottom: 5px;
+        }
+
+        .page-description {
+            color: #778589;
+
+            margin-bottom: 35px;
+        }
+
+
+        /* ==============================
+           THỐNG KÊ
+           ============================== */
+
+        .book-summary {
+            display: flex;
+            gap: 15px;
+
+            margin-bottom: 35px;
+        }
+
+        .summary-card {
+            background: white;
+
+            border-radius: 9px;
+
+            padding: 15px 22px;
+
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .summary-number {
+            color: #17a2b8;
+
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .summary-label {
+            color: #778589;
+
+            font-size: 13px;
+
+            margin-left: 5px;
+        }
+
+
+        /* ==============================
+           SECTION
+           ============================== */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            font-size: 22px;
+            font-weight: 700;
+
+            color: #213b42;
+        }
+
+        .section-title i {
+            color: #17a2b8;
+
+            margin-right: 10px;
+        }
+
+
+        /* ==============================
+           BOOK CARD
+           ============================== */
+
+        .borrow-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 18px;
+        }
+
+        .borrow-card {
+            display: flex;
+
+            background: white;
+
+            border-radius: 11px;
+
+            padding: 20px;
+
+            box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+
+            transition: 0.2s;
+        }
+
+        .borrow-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+        }
+
+
+        /* ==============================
+           COVER
+           ============================== */
+
+        .book-cover {
+            width: 105px;
+            height: 145px;
+
+            object-fit: cover;
+
+            border-radius: 6px;
+
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+
+            flex-shrink: 0;
+        }
+
+        .no-cover {
+            width: 105px;
+            height: 145px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e5ecec;
+
+            border-radius: 6px;
+
+            color: #94a7aa;
+
+            font-size: 30px;
+        }
+
+
+        /* ==============================
+           INFO
+           ============================== */
+
+        .borrow-info {
+            flex: 1;
+
+            padding-left: 22px;
+        }
+
+        .book-name {
+            display: inline-block;
+
+            color: #183840;
+
+            font-family: 'Charm', cursive;
+
+            font-size: 26px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            margin-bottom: 4px;
+        }
+
+        .book-name:hover {
+            color: #17a2b8;
+
+            text-decoration: none;
+        }
+
+        .book-isbn {
+            color: #94a1a4;
+
+            font-size: 12px;
+
+            margin-bottom: 16px;
+        }
+
+        .borrow-dates {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 30px;
+        }
+
+        .date-item {
+            font-size: 13px;
+
+            color: #67777b;
+        }
+
+        .date-item strong {
+            display: block;
+
+            color: #354b51;
+
+            margin-bottom: 3px;
+        }
+
+
+        /* ==============================
+           STATUS
+           ============================== */
+
+        .borrow-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            padding-left: 20px;
+        }
+
+        .status-borrowed {
+            padding: 6px 12px;
+
+            background: #e5f5f7;
+
+            color: #168ca0;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-returned {
+            padding: 6px 12px;
+
+            background: #edf1f1;
+
+            color: #718084;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* ==============================
+           BUTTON
+           ============================== */
+
+        .return-button {
+            border: none;
+
+            background: #17a2b8;
+
+            color: white;
+
+            padding: 8px 14px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .return-button:hover {
+            background: #138496;
+        }
+
+        .detail-button {
+            display: inline-block;
+
+            margin-top: 12px;
+
+            color: #17a2b8;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+        .detail-button:hover {
+            color: #117d8e;
+
+            text-decoration: none;
+        }
+
+
+        /* ==============================
+           EMPTY
+           ============================== */
+
+        .empty-books {
+            background: white;
+
+            padding: 55px 20px;
+
+            text-align: center;
+
+            border-radius: 10px;
+
+            box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+
+            color: #839195;
+        }
+
+        .empty-books i {
+            display: block;
+
+            color: #a8b9bb;
+
+            font-size: 42px;
+
+            margin-bottom: 15px;
+        }
+
+        .explore-books {
+            display: inline-block;
+
+            margin-top: 12px;
+
+            background: #17a2b8;
+
+            color: white !important;
+
+            padding: 9px 16px;
+
+            border-radius: 6px;
+
+            text-decoration: none !important;
+
+            font-weight: 600;
+        }
+
+
+        /* ==============================
+           RESPONSIVE
+           ============================== */
+
+        @media (max-width: 768px) {
+
+            .borrow-card {
+                flex-wrap: wrap;
+            }
+
+            .borrow-info {
+                width: calc(100% - 105px);
+
+                padding-left: 15px;
+            }
+
+            .borrow-status {
+                width: 100%;
+
+                flex-direction: row;
+
+                padding-left: 0;
+
+                margin-top: 18px;
+            }
+
+            .borrow-dates {
+                gap: 15px;
+            }
+
+            .book-summary {
+                flex-wrap: wrap;
+            }
+
+        }
+
+        /* ==============================
+            SÁCH YÊU THÍCH
+            ============================== */
+
+            .favorite-section {
+                margin-top: 45px;
+            }
+
+            .section-heading {
+                display: flex;
+                align-items: center;
+
+                margin-bottom: 20px;
+
+                font-size: 22px;
+                font-weight: 700;
+
+                color: #213b42;
+            }
+
+            .section-heading i {
+                color: #17a2b8;
+                margin-right: 10px;
+            }
+
+
+            /* DANH SÁCH */
+
+            .favorite-list {
+                display: flex;
+                flex-direction: column;
+
+                gap: 18px;
+            }
+
+
+            /* CARD */
+
+            .favorite-book-card {
+                display: flex;
+                align-items: center;
+
+                background: white;
+
+                padding: 20px;
+
+                border-radius: 11px;
+
+                box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+
+                transition: 0.2s;
+            }
+
+            .favorite-book-card:hover {
+                transform: translateY(-2px);
+
+                box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+            }
+
+
+            /* ẢNH BÌA */
+
+            .favorite-cover {
+                width: 105px;
+                height: 145px;
+
+                flex-shrink: 0;
+            }
+
+            .favorite-cover img {
+                width: 105px;
+                height: 145px;
+
+                object-fit: cover;
+
+                border-radius: 6px;
+
+                box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            }
+
+            .favorite-no-cover {
+                width: 105px;
+                height: 145px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                background: #e5ecec;
+
+                border-radius: 6px;
+
+                color: #94a7aa;
+
+                font-size: 30px;
+            }
+
+
+            /* THÔNG TIN */
+
+            .favorite-info {
+                flex: 1;
+
+                padding-left: 22px;
+            }
+
+            .favorite-info h3 {
+                font-family: 'Charm', cursive;
+
+                font-size: 26px;
+                font-weight: 700;
+
+                color: #183840;
+
+                margin-bottom: 5px;
+            }
+
+            .favorite-info p {
+                color: #94a1a4;
+
+                font-size: 12px;
+
+                margin-bottom: 12px;
+            }
+
+            .favorite-detail {
+                color: #17a2b8;
+
+                font-size: 13px;
+                font-weight: 600;
+
+                text-decoration: none;
+            }
+
+            .favorite-detail:hover {
+                color: #117d8e;
+
+                text-decoration: none;
+            }
+
+
+            /* NÚT BỎ YÊU THÍCH */
+
+            .favorite-action {
+                padding-left: 20px;
+            }
+
+            .btn-remove-favorite {
+                border: 1px solid #d8e0e2;
+
+                background: white;
+
+                color: #65777b;
+
+                padding: 8px 14px;
+
+                border-radius: 6px;
+
+                font-size: 13px;
+                font-weight: 600;
+
+                cursor: pointer;
+
+                transition: 0.2s;
+            }
+
+            .btn-remove-favorite i {
+                color: #17a2b8;
+
+                margin-right: 5px;
+            }
+
+            .btn-remove-favorite:hover {
+                background: #f3f7f8;
+            }
+
+
+            /* CHƯA CÓ YÊU THÍCH */
+
+            .empty-library {
+                background: white;
+
+                padding: 55px 20px;
+
+                text-align: center;
+
+                border-radius: 10px;
+
+                box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+
+                color: #839195;
+            }
+
+            .empty-library > i {
+                display: block;
+
+                color: #a8b9bb;
+
+                font-size: 42px;
+
+                margin-bottom: 15px;
+            }
+
+
+            /* RESPONSIVE FAVORITE */
+
+            @media (max-width: 768px) {
+
+                .favorite-book-card {
+                    flex-wrap: wrap;
+                    align-items: flex-start;
+                }
+
+                .favorite-info {
+                    width: calc(100% - 105px);
+                    padding-left: 15px;
+                }
+
+                .favorite-action {
+                    width: 100%;
+
+                    padding-left: 120px;
+                    margin-top: 15px;
+                }
+            }
+
+                </style>
+
+            </head>
+
+            <body>
+
+            <div th:insert="comman/header :: header"></div>
+
+
+            <main class="my-books-page">
+
+                <div class="container">
+
+
+        <!-- ============================== -->
+        <!-- HEADER -->
+        <!-- ============================== -->
+
+        <span class="page-label">
+            THƯ VIỆN CỦA BẠN
+        </span>
+
+        <h1 class="page-title">
+            Sách của tôi
+        </h1>
+
+        <p class="page-description">
+            Theo dõi những cuốn sách bạn đang mượn
+            và lịch sử đọc của bạn.
+        </p>
+
+
+        <!-- ============================== -->
+        <!-- THỐNG KÊ -->
+        <!-- ============================== -->
+
+        <div class="book-summary">
+
+            <div class="summary-card">
+
+                <span class="summary-number"
+                      th:text="${#lists.size(borrows.?[status == 'BORROWED'])}">
+                    0
+                </span>
+
+                <span class="summary-label">
+                    đang mượn
+                </span>
+
+            </div>
+
+            <div class="summary-card">
+
+                <span class="summary-number"
+                    th:text="${#lists.size(favorites)}">
+                    0
+                </span>
+
+                <span class="summary-label">
+                    yêu thích
+                </span>
+
+            </div>
+
+            <div class="summary-card">
+
+                <span class="summary-number"
+                      th:text="${#lists.size(borrows.?[status == 'RETURNED'])}">
+                    0
+                </span>
+
+                <span class="summary-label">
+                    đã đọc
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================== -->
+        <!-- ĐANG MƯỢN -->
+        <!-- ============================== -->
+
+        <h2 class="section-title">
+
+            <i class="fas fa-book-reader"></i>
+
+            Đang mượn
+
+        </h2>
+
+
+        <div class="borrow-list">
+
+
+            <!-- CARD -->
+
+            <div class="borrow-card"
+                 th:each="borrow : ${borrows}"
+                 th:if="${borrow.status == 'BORROWED'}">
+
+
+                <!-- COVER -->
+
+                <img th:if="${borrow.book.coverImage != null and !borrow.book.coverImage.isEmpty()}"
+                     th:src="@{'/uploads/books/' + ${borrow.book.coverImage}}"
+                     class="book-cover"
+                     th:alt="${borrow.book.name}">
+
+
+                <div th:if="${borrow.book.coverImage == null or borrow.book.coverImage.isEmpty()}"
+                     class="no-cover">
+
+                    <i class="fas fa-book"></i>
+
+                </div>
+
+
+                <!-- INFO -->
+
+                <div class="borrow-info">
+
+                    <a th:href="@{/book/{id}(id=${borrow.book.id})}"
+                       th:text="${borrow.book.name}"
+                       class="book-name">
+                        Tên sách
+                    </a>
+
+                    <div class="book-isbn">
+
+                        ISBN:
+                        <span th:text="${borrow.book.isbn}">
+                        </span>
+
+                    </div>
+
+
+                    <div class="borrow-dates">
+
+                        <div class="date-item">
+
+                            <strong>
+                                Ngày mượn
+                            </strong>
+
+                            <span th:text="${borrow.borrowDate}">
+                            </span>
+
+                        </div>
+
+
+                        <div class="date-item">
+
+                            <strong>
+                                Hạn trả
+                            </strong>
+
+                            <span th:text="${borrow.dueDate}">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a th:href="@{/book/{id}(id=${borrow.book.id})}"
+                       class="detail-button">
+
+                        Xem chi tiết
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="borrow-status">
+
+                    <span class="status-borrowed">
+                        Đang mượn
+                    </span>
+
+
+                    <form th:action="@{/return-book/{id}(id=${borrow.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="return-button">
+
+                            <i class="fas fa-undo"></i>
+
+                            Trả sách
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- KHÔNG CÓ SÁCH ĐANG MƯỢN -->
+
+            <div class="empty-books"
+                 th:if="${#lists.isEmpty(borrows.?[status == 'BORROWED'])}">
+
+                <i class="fas fa-book-open"></i>
+
+                <div>
+                    Bạn chưa mượn cuốn sách nào.
+                </div>
+
+                <a th:href="@{/books}"
+                   class="explore-books">
+
+                    Khám phá sách
+
+                </a>
+
+            </div>
+
+        </div>
+
+<!-- ========================= -->
+<!-- SÁCH YÊU THÍCH -->
+<!-- ========================= -->
+
+<div class="favorite-section">
+
+    <h2 class="section-heading">
+        <i class="fas fa-heart"></i>
+        Sách yêu thích
+    </h2>
+
+
+    <!-- CHƯA CÓ SÁCH YÊU THÍCH -->
+
+    <div th:if="${#lists.isEmpty(favorites)}"
+         class="empty-library">
+
+        <i class="far fa-heart"></i>
+
+        <p>Bạn chưa có cuốn sách yêu thích nào.</p>
+
+        <a th:href="@{/books}" class="btn btn-info">
+            Khám phá sách
+        </a>
+
+    </div>
+
+
+    <!-- DANH SÁCH SÁCH YÊU THÍCH -->
+
+    <div th:if="${!#lists.isEmpty(favorites)}"
+         class="favorite-list">
+
+        <div class="favorite-book-card"
+             th:each="favorite : ${favorites}">
+
+            <!-- ẢNH BÌA -->
+            <div class="favorite-cover">
+
+                <img th:if="${favorite.book.coverImage != null
+                            and !favorite.book.coverImage.isEmpty()}"
+                     th:src="@{'/uploads/books/' + ${favorite.book.coverImage}}"
+                     th:alt="${favorite.book.name}">
+
+
+                <div th:if="${favorite.book.coverImage == null
+                            or favorite.book.coverImage.isEmpty()}"
+                     class="favorite-no-cover">
+
+                    <i class="fas fa-book"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- THÔNG TIN -->
+            <div class="favorite-info">
+
+                <h3 th:text="${favorite.book.name}">
+                    Tên sách
+                </h3>
+
+                <p>
+                    ISBN:
+                    <span th:text="${favorite.book.isbn}"></span>
+                </p>
+
+                <a th:href="@{/book/{id}(id=${favorite.book.id})}"
+                   class="favorite-detail">
+
+                    Xem chi tiết
+                    <i class="fas fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- NÚT BỎ YÊU THÍCH -->
+            <div class="favorite-action">
+
+                <form th:action="@{/favorite/{id}(id=${favorite.book.id})}"
+                      method="post">
+
+                    <button type="submit"
+                            class="btn-remove-favorite">
+
+                        <i class="fas fa-heart"></i>
+                        Bỏ yêu thích
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+        <!-- ============================== -->
+        <!-- LỊCH SỬ -->
+        <!-- ============================== -->
+
+        <h2 class="section-title mt-5">
+
+            <i class="fas fa-history"></i>
+
+            Lịch sử mượn
+
+        </h2>
+
+
+        <div class="borrow-list">
+
+
+            <div class="borrow-card"
+                 th:each="borrow : ${borrows}"
+                 th:if="${borrow.status == 'RETURNED'}">
+
+
+                <!-- COVER -->
+
+                <img th:if="${borrow.book.coverImage != null and !borrow.book.coverImage.isEmpty()}"
+                     th:src="@{'/uploads/books/' + ${borrow.book.coverImage}}"
+                     class="book-cover"
+                     th:alt="${borrow.book.name}">
+
+
+                <div th:if="${borrow.book.coverImage == null or borrow.book.coverImage.isEmpty()}"
+                     class="no-cover">
+
+                    <i class="fas fa-book"></i>
+
+                </div>
+
+
+                <!-- INFO -->
+
+                <div class="borrow-info">
+
+                    <a th:href="@{/book/{id}(id=${borrow.book.id})}"
+                       th:text="${borrow.book.name}"
+                       class="book-name">
+                    </a>
+
+
+                    <div class="book-isbn">
+
+                        ISBN:
+
+                        <span th:text="${borrow.book.isbn}">
+                        </span>
+
+                    </div>
+
+
+                    <div class="borrow-dates">
+
+
+                        <div class="date-item">
+
+                            <strong>
+                                Ngày mượn
+                            </strong>
+
+                            <span th:text="${borrow.borrowDate}">
+                            </span>
+
+                        </div>
+
+
+                        <div class="date-item">
+
+                            <strong>
+                                Ngày trả
+                            </strong>
+
+                            <span th:text="${borrow.returnDate}">
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <a th:href="@{/book/{id}(id=${borrow.book.id})}"
+                       class="detail-button">
+
+                        Xem lại sách
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="borrow-status">
+
+                    <span class="status-returned">
+
+                        <i class="fas fa-check"></i>
+
+                        Đã trả
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- CHƯA CÓ LỊCH SỬ -->
+
+            <div class="empty-books"
+                 th:if="${#lists.isEmpty(borrows.?[status == 'RETURNED'])}">
+
+                <i class="fas fa-history"></i>
+
+                <div>
+                    Chưa có lịch sử mượn sách.
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<div th:insert="comman/footer :: footer"></div>
+
+</body>
+
+</html>

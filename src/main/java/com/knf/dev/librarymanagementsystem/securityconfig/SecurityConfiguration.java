@@ -20,16 +20,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+private CustomAuthenticationSuccessHandler successHandler;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
+
         var auth = new DaoAuthenticationProvider();
+
         auth.setUserDetailsService(userService);
-        auth.setPasswordEncoder(passwordEncoder());
+        auth.setPasswordEncoder(passwordEncoder);
+
         return auth;
     }
 
@@ -41,25 +45,93 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
+        http
+           .authorizeRequests()
+
+                // Ai cũng được truy cập
                 .antMatchers(
-                        "/js/**",
-                        "/css/**",
-                        "/img/**",
-                        "/images/**"
+                    "/login",
+                    "/register",
+                    "/css/**",
+                    "/js/**",
+                    "/img/**",
+                    "/images/**",
+                    "/uploads/**"
                 ).permitAll()
+
+                // Chỉ ADMIN được quản lý sách
+                .antMatchers(
+                    "/add",
+                    "/add-book",
+                    "/update/**",
+                    "/update-book/**",
+                    "/remove-book/**"
+                ).hasRole("ADMIN")
+
+                // Chỉ ADMIN được quản lý tác giả
+                .antMatchers(
+                    "/addAuthor",
+                    "/add-author",
+                    "/updateAuthor/**",
+                    "/update-author/**",
+                    "/remove-author/**"
+                ).hasRole("ADMIN")
+
+                // Chỉ ADMIN được quản lý nhà xuất bản
+                .antMatchers(
+                    "/addPublisher",
+                    "/add-publisher",
+                    "/updatePublisher/**",
+                    "/update-publisher/**",
+                    "/remove-publisher/**"
+                ).hasRole("ADMIN")
+
+                // Chỉ ADMIN được quản lý thể loại
+                .antMatchers(
+                    "/addCategory",
+                    "/add-category",
+                    "/updateCategory/**",
+                    "/update-category/**",
+                    "/remove-category/**"
+                ).hasRole("ADMIN")
+
+                // Trang USER
+                .antMatchers(
+                    "/welcome"
+                ).hasAnyRole("USER", "ADMIN")
+
+                // Các trang khác chỉ cần đăng nhập
+                .antMatchers(
+                "/borrow/**",
+                "/my-borrows",
+                "/return-book/**"
+            ).hasRole("USER")
+
+            .antMatchers(
+                "/favorite/**",
+                "/unfavorite/**"
+            ).hasRole("USER")
+
                 .anyRequest().authenticated()
 
-                .and()
-                .formLogin()
+            .and()
+
+            .formLogin()
                 .loginPage("/login")
+
+                // Sau khi đăng nhập thành công
+                .successHandler(successHandler)
+
                 .permitAll()
 
-                .and()
-                .logout()
+            .and()
+
+            .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutRequestMatcher(
+                    new AntPathRequestMatcher("/logout")
+                )
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
