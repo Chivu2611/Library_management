@@ -1,42 +1,261 @@
-# Java, Spring Boot Mini Project - Library Management System
+# Library Management System
 
+Library Management System được xây dựng bằng **Java 17, Spring Boot, Spring Security, Thymeleaf, Spring Data JPA và MySQL**.
 
-# Local setup
+## Requirements
 
-Step 1: Download or clone the source code from GitHub to the local machine
+Trước khi chạy project, cần cài đặt:
 
-Step 2: Install JDK 17 - https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+- JDK 17
+- Apache Maven
+- MySQL 8.x
+- Git
+- IDE: VS Code / IntelliJ IDEA / Eclipse / NetBeans
 
-Step 3: Install IntelliJ IDEA or Eclipse or Apache NetBeans IDE
+Kiểm tra Java:
 
-Step 4: Install Apache Maven - https://maven.apache.org/install.html
+```bash
+java -version
+```
 
-Step 5:  ```mvn clean install```
+Kiểm tra Maven:
 
-Step 6:  ```mvn spring-boot:run```
+```bash
+mvn -version
+```
 
-Step 7: From the browser call the endpoint http://localhost:9080
+---
 
-Step 8: Admin Login User Id: ```admin@admin.in``` & Password: ```Temp123```
+# Local Setup
 
+## Step 1: Clone project
 
-# Admin Login Interface
+```bash
+git clone <YOUR_REPOSITORY_URL>
+```
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiiuctxupeOK4Nh8j-nomwwapjkcVvkYig3lX7qoifcXE76_6CnOXMZ-CLww7G180qegsCkrtyUlaqpJsWm9GzhX9QUFxyNyEUAXFD5UWJpvh2BdIr0wyAnFC38QOdsL_1vak8LtxYHrZyplCU_Sri-7kM9nXxI9heXXB0621rzJgL6j1CSweX6xjaorg/s945/admin-login.png">
+Di chuyển vào thư mục project:
 
-# Add new books, update books, view books, delete books
+```bash
+cd librarymanagementsystem
+```
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYMpuCQx3lGsS4T_H4ziyDWIkBpYV5qgo5JHFMV0Drper48H7YfygEdv0htE3yWo8mlypUW9W7NFY00UtrVznFfFYIzNGAXBeskhBb_kHAJrVKnI7O5mZt0_c085n6ir-cNVEYsTYffn6WgCmoBiZULR88ah_YxDC-ywRKPTsxj58GcHFnyyeX00RsNA/s800/library-management-system.png">
+---
 
-# Add new authors, update authors, view authors, delete authors
+## Step 2: Tạo MySQL Database
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixAW5k4E9IXf_OuVO1S5m100KS1xFo2ZrFoLnZYvNLjfpmIdI8W0ukd6yQn6oTsSWBKjDdAIGsnPf0EhgRwKzfpVq3mJXMcqG94Qp2oCCy0Pzf01b3kXP2ahgbvpFQND60c7cHwPNZ7A6uXh7fxqvB5od26PleS3giunEN-uAuFIuKijjELspH1_gLcw/s934/authors-list.png">
+Khởi động MySQL Server và tạo database:
 
-# Add new categories, update categories, view categories, delete categories
+```sql
+CREATE DATABASE library_management
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+```
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYe6-eBO4HZjqE1Rr0PLoHS1dlvlnwuagwQtX6eRavoDsWRGk4yfguhWIdcOFRgM4H7985xL1bdiLQLqX_iU7RzddDb1yiQ0P3M0sfwUdTRlRGMg85Kp2KKTsVZH5WGlptL6LFRTITq4oSCJFFCZwGML1RrxI-chu-xb4eXOWIoZpNlFWLLUzkW6zLdQ/s935/categorylist.png">
+Có thể kiểm tra bằng:
 
-# Add new publishers, update publishers, view publishers, delete publishers
+```sql
+SHOW DATABASES;
+```
 
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhcNQAd4UVi_bYQQSvW49hn0rQ1O7bEBDyN4DDNJSH1rtxBg37QIHQKAp7ELGbFV4Xva2F0DmhTkA3vKVeZcmKs7lODgTulsJr1aLyBckEojzxzZE5FYlfuEwD62Qco6PsjdNVPEWT76GlyVnSP94zNZK59w3CMRuvbYjoc1-MpyXj-WCeNEjPDm6mucw/s938/publishers-list.png">
+---
 
+## Step 3: Cấu hình Database
+
+Mở file:
+
+```text
+src/main/resources/application.properties
+```
+
+Cấu hình:
+
+```properties
+server.port=9080
+server.error.whitelabel.enabled=false
+
+# MySQL
+spring.datasource.url=jdbc:mysql://localhost:3306/library_management?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&allowPublicKeyRetrieval=true
+
+spring.datasource.username=root
+spring.datasource.password=YOUR_MYSQL_PASSWORD
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```
+
+Thay:
+
+```properties
+spring.datasource.password=YOUR_MYSQL_PASSWORD
+```
+
+bằng mật khẩu MySQL trên máy của bạn.
+
+Nếu tài khoản MySQL không phải `root`, thay cả:
+
+```properties
+spring.datasource.username=YOUR_MYSQL_USERNAME
+```
+
+> Project sử dụng `spring.jpa.hibernate.ddl-auto=update`, vì vậy Hibernate sẽ tự tạo/cập nhật các bảng cần thiết khi ứng dụng khởi động.
+
+---
+
+## Step 4: Build project
+
+Tại thư mục chứa `pom.xml`, chạy:
+
+```bash
+mvn clean install
+```
+
+Nếu thành công sẽ xuất hiện:
+
+```text
+BUILD SUCCESS
+```
+
+---
+
+## Step 5: Chạy project
+
+```bash
+mvn spring-boot:run
+```
+
+Khi Spring Boot khởi động thành công, mở trình duyệt:
+
+```text
+http://localhost:9080
+```
+
+---
+
+# Database
+
+Project sử dụng:
+
+- MySQL 8.x
+- Spring Data JPA
+- Hibernate
+- MySQL Connector/J
+
+Database mặc định:
+
+```text
+library_management
+```
+
+Các dữ liệu chính của hệ thống gồm:
+
+- Books
+- Authors
+- Categories
+- Publishers
+- Users
+- Roles
+- Borrows
+- Favorites
+
+---
+
+# User Roles
+
+Hệ thống sử dụng Spring Security với hai quyền:
+
+```text
+ROLE_ADMIN
+ROLE_USER
+```
+
+- `ROLE_ADMIN`: quản lý sách, tác giả, thể loại, nhà xuất bản...
+- `ROLE_USER`: xem sách, mượn/trả sách, yêu thích sách và quản lý sách cá nhân.
+
+Tài khoản đăng ký thông thường được cấp `ROLE_USER`.
+
+> Với database mới hoàn toàn, cần có tài khoản được gán `ROLE_ADMIN` để sử dụng các chức năng quản trị.
+
+---
+
+# Image Uploads
+
+Ảnh sách được lưu tại:
+
+```text
+uploads/books/
+```
+
+Ảnh tác giả được lưu tại:
+
+```text
+uploads/authors/
+```
+
+Database chỉ lưu tên file ảnh. Nếu chuyển database sang máy khác và muốn giữ ảnh cũ, cần chuyển cả các thư mục upload tương ứng.
+
+---
+
+# Common Problems
+
+### MySQL connection failed
+
+Kiểm tra:
+
+- MySQL Server đã chạy chưa.
+- Database `library_management` đã được tạo chưa.
+- Username và password trong `application.properties` có đúng không.
+- MySQL có đang sử dụng port `3306` không.
+
+### Port 9080 already in use
+
+Có thể đổi:
+
+```properties
+server.port=9080
+```
+
+sang port khác, ví dụ:
+
+```properties
+server.port=8080
+```
+
+### Maven build
+
+Không chạy:
+
+```bash
+mvn
+```
+
+mà sử dụng:
+
+```bash
+mvn clean install
+```
+
+hoặc:
+
+```bash
+mvn spring-boot:run
+```
+
+---
+
+# Quick Start
+
+```text
+1. Install Java 17, Maven and MySQL
+2. Clone project
+3. Create database: library_management
+4. Configure MySQL username/password in application.properties
+5. Run: mvn clean install
+6. Run: mvn spring-boot:run
+7. Open: http://localhost:9080
+```
