@@ -592,7 +592,7 @@
 <!-- ========================= -->
 
 <form th:if="${!isBorrowing}"
-      th:action="@{/borrow/{id}(id=${book.id})}"
+      th:action="@{/cart/add/{id}(id=${book.id})}"
       method="post"
       style="display:inline-block;">
 
@@ -600,7 +600,7 @@
             class="btn btn-info">
 
         <i class="fas fa-book-reader"></i>
-        Mượn sách
+        Thêm vào danh sách mượn
 
     </button>
 

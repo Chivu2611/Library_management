@@ -74,6 +74,25 @@
 
 </head>
 
+<script>
+
+window.onload = function () {
+
+    const alert = document.getElementById("successAlert");
+
+    if (alert) {
+
+        setTimeout(function () {
+
+            alert.style.display = "none";
+
+        }, 5000);
+
+    }
+
+};
+
+</script>
 
 <body class="page-background books-bg">
 
@@ -143,6 +162,22 @@
 
 				<div th:case="*">
 
+				<div id="successAlert"
+					 th:if="${successMessage}"
+					 class="alert alert-success alert-dismissible fade show">
+
+					<span th:text="${successMessage}"></span>
+
+					<button type="button"
+							class="close"
+							onclick="this.parentElement.style.display='none';">
+						
+
+						<span>&times;</span>
+
+					</button>
+
+				</div>
 
 					<table class="table table-bordered">
 
@@ -164,6 +199,11 @@
 
 								<th class="text-center">
 									Chi tiết
+								</th>
+
+								<th class="text-center"
+									sec:authorize="hasRole('USER')">
+									Mượn
 								</th>
 
 								<th class="text-center"
@@ -254,6 +294,24 @@
 
 								</td>
 
+
+								<td class="text-center"
+									sec:authorize="hasRole('USER')">
+
+									<form th:action="@{/cart/add/{id}(id=${book.id})}"
+										method="post"
+										style="display:inline;">
+
+										<button type="submit"
+												class="btn btn-success">
+
+											<i class="fas fa-book-reader"></i>
+
+										</button>
+
+									</form>
+
+								</td>								
 
 								<!-- ======================== -->
 								<!-- SỬA - CHỈ ADMIN -->

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Danh sách mượn</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+          th:href="@{/css/header.css}">
+
+    <style>
+
+    .cart-page{
+
+        min-height:80vh;
+
+        background:#f5f7f7;
+
+        padding:50px 0;
+    }
+
+    .cart-card{
+
+        background:#fff;
+
+        border-radius:15px;
+
+        box-shadow:0 4px 18px rgba(0,0,0,.08);
+
+        padding:40px;
+    }
+
+    .cart-label{
+
+        color:#17a2b8;
+
+        font-size:12px;
+
+        letter-spacing:3px;
+
+        font-weight:bold;
+    }
+
+    .cart-header h1{
+
+        font-family:'Charm',cursive;
+
+        font-size:42px;
+
+        color:#19363e;
+
+        margin-top:10px;
+    }
+
+    .table td{
+
+        vertical-align:middle;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+<div th:insert="comman/header :: header"></div>
+
+<main class="cart-page">
+
+    <div class="container">
+
+        <div class="cart-card">
+
+            <div class="cart-header">
+
+                <span class="cart-label">
+                    THƯ VIỆN
+                </span>
+
+                <h1>
+                    Danh sách mượn
+                </h1>
+
+                <p>
+                    Chọn những cuốn sách muốn xác nhận mượn.
+                </p>
+
+            </div>
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-info text-white">
+
+            <h3>
+
+                <i class="fas fa-book-reader"></i>
+
+                Danh sách mượn
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered align-middle">
+
+                <thead class="thead-light">
+
+                <tr>
+
+                    <th width="70">Chọn</th>
+
+                    <th>Tên sách</th>
+                    
+                    <th width="120">Thao tác</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="book : ${books}">
+
+                    <td>
+
+                        <input type="checkbox"
+                            checked>
+
+                    </td>
+
+                    <td>
+
+                        <i class="fas fa-book text-info"></i>
+
+                        <span th:text="${book.name}"></span>
+
+                    </td>
+
+                    <td>
+
+                        <form th:action="@{/cart/remove/{id}(id=${book.id})}"
+                            method="post">
+
+                            <button class="btn btn-danger btn-sm">
+
+                                <i class="fas fa-trash"></i>
+
+                                Xóa
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="text-center mt-5">
+
+                <button
+                        class="btn btn-info btn-lg px–5">
+
+                    <i class="fas fa-check-circle"></i>
+
+                    Xác nhận mượn
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<div th:insert="comman/footer :: footer"></div>
+
+</body>
+
+</html>

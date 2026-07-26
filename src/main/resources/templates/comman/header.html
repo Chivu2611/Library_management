@@ -118,6 +118,18 @@
 					</a>
 
 				</li>
+				
+				<li class="nav-item"
+					sec:authorize="hasRole('USER')">
+
+					<a class="nav-link"
+						th:href="@{/cart}">
+
+						Danh sách mượn
+
+					</a>
+
+				</li>
 
 				<!-- Tác giả -->
 				<li class="nav-item"
